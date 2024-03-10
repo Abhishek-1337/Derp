@@ -8,7 +8,20 @@ const initialState = {
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    updateData(state, action) {
+      const product = action?.payload;
+      state.data.map((item) => {
+        if (item.product_id === product.id) {
+          item.category = product.values?.category;
+          item.price = product.values?.price;
+          item.product_name = product.values?.productName;
+          item.quantity_in_stock = product.values?.quantity;
+        }
+      });
+    },
+  },
 });
 
+export const productActions = productSlice.actions;
 export default productSlice;

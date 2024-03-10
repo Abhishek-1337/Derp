@@ -12,6 +12,7 @@ const ProductTableMain = () => {
 
   const modalDialogHandler = (item) => {
     const productDetails = {
+      id: item.product_id,
       name: item.product_name,
       price: item.price,
       category: item.category,
@@ -32,10 +33,12 @@ const ProductTableMain = () => {
         onCancel={handleModalOnCancel}
         data={
           <ProductForm
+            id={productEdit.id}
             name={productEdit.name}
             category={productEdit.category}
             price={productEdit.price}
             quantity={productEdit.quantity}
+            onCancel={handleModalOnCancel}
           />
         }
       />

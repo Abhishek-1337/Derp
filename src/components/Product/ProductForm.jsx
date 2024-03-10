@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { productActions } from "../../store/slice/product";
 
 const validationSchema = Yup.object({
   productName: Yup.string()
     .min(3, "Product name must be at least 3 characters")
-    .max(15, "Product name must be at most 15 characters")
+    .max(30, "Product name must be at most 15 characters")
     .required("Product name is required"),
   price: Yup.number()
     .min(5, "Price value must be atleast 5")
@@ -21,11 +23,14 @@ const validationSchema = Yup.object({
     .required("Quantity value is required"),
 });
 
-const ProductForm = ({ name, category, price, quantity }) => {
+const ProductForm = ({ id, name, category, price, quantity, onCancel }) => {
+  const dispatch = useDispatch();
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
 
-    resetForm();
+    values.category = values.category.trim();
+    dispatch(productActions.updateData({ id, values }));
+    onCancel();
   };
 
   useEffect(() => {
@@ -35,7 +40,6 @@ const ProductForm = ({ name, category, price, quantity }) => {
     formik.setFieldValue("quantity", quantity);
   }, [name, price, category, quantity]);
 
-  console.log(name, category, price);
   const formik = useFormik({
     initialValues: {
       productName: "",
