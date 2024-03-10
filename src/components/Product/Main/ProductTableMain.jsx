@@ -3,6 +3,7 @@ import { useState } from "react";
 import EditIcon from "../../../shared/components/EditIcon";
 import DeleteIcon from "../../../shared/components/DeleteIcon";
 import Modal from "../../../shared/components/Modal";
+import ProductForm from "../ProductForm";
 
 const ProductTableMain = () => {
   const productData = useSelector((state) => state.product.data);
@@ -17,61 +18,12 @@ const ProductTableMain = () => {
   };
 
   return (
-    // <div className="mt-4">
-    //   <ul className="p-1">
-    //     <li className="text-[10px] flex text-center bg-gray-500 rounded-t-lg font-medium text-white">
-    //       <div className="grow">NAME</div>
-    //       <div className="flex-grow">CATEGORY</div>
-    //       <div className="flex-grow">PRICE</div>
-    //       <div className="flex-grow">QUANTITY</div>
-    //       <div className="flex-grow">ACTION</div>
-    //     </li>
-    //     <li className="text-[0.75em] flex min-w-max">
-    //       <div className="flex grow items-center justify-center p-2">
-    //         <span className="inline-block w-[60%] text-center">
-    //           My name is abhishek
-    //         </span>
-    //       </div>
-    //       <div className="flex grow items-center justify-center p-2">
-    //         <span className="inline-block w-[60%] text-center">
-    //           My name is abhishek
-    //         </span>
-    //       </div>
-    //       <div className="flex grow items-center justify-center p-2">
-    //         <span className="inline-block w-[60%] text-center">
-    //           My name is abhishek
-    //         </span>
-    //       </div>
-    //       <div className="flex grow items-center justify-center p-2">
-    //         <span className="inline-block w-[60%] text-center">
-    //           My name is abhishek
-    //         </span>
-    //       </div>
-    //       <div className="flex grow items-center justify-center p-2">
-    //         <span className="inline-block w-[60%] text-center">
-    //           My name is abhishek
-    //         </span>
-    //       </div>
-
-    /* <div className="grow">
-            <span className="inline-block w-[60%]">yoo</span>
-          </div>
-          <div className="grow">
-            <span className="inline-block w-[60%]">Abcwhat</span>
-          </div>
-          <div className="grow">
-            <span className="inline-block w-[60%]">dfdfdf</span>
-          </div>
-          <div className="grow">
-            <span className="inline-block w-[60%]">dfdfdf</span>
-          </div> */
-
-    //     </li>
-    //   </ul>
-    // </div>
-
     <div className="overflow-auto p-1">
-      <Modal isOpen={modalDialog} onCancel={handleModalOnCancel} />
+      <Modal
+        isOpen={modalDialog}
+        onCancel={handleModalOnCancel}
+        data={<ProductForm />}
+      />
       <table className="min-w-[720px] md:w-full mt-4 table-fixed">
         <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
           <th className="font-medium mr-2">NAME</th>
