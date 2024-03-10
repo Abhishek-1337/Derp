@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useEffect } from "react";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -23,15 +24,24 @@ const validationSchema = Yup.object({
 const ProductForm = ({ name, category, price, quantity }) => {
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
+
     resetForm();
   };
 
+  useEffect(() => {
+    formik.setFieldValue("productName", name);
+    formik.setFieldValue("price", price);
+    formik.setFieldValue("category", category);
+    formik.setFieldValue("quantity", quantity);
+  }, [name, price, category, quantity]);
+
+  console.log(name, category, price);
   const formik = useFormik({
     initialValues: {
-      productName: name || "",
-      price: price || 0,
-      category: category || "",
-      quantity: quantity || 0,
+      productName: "",
+      price: 0,
+      category: "",
+      quantity: 0,
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {

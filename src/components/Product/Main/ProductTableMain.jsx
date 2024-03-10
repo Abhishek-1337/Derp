@@ -8,8 +8,16 @@ import ProductForm from "../ProductForm";
 const ProductTableMain = () => {
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
+  const [productEdit, setProductEdit] = useState({});
 
-  const modalDialogHandler = () => {
+  const modalDialogHandler = (item) => {
+    const productDetails = {
+      name: item.product_name,
+      price: item.price,
+      category: item.category,
+      quantity: item.quantity_in_stock,
+    };
+    setProductEdit(productDetails);
     setModalDialog(true);
   };
 
@@ -22,7 +30,14 @@ const ProductTableMain = () => {
       <Modal
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
-        data={<ProductForm />}
+        data={
+          <ProductForm
+            name={productEdit.name}
+            category={productEdit.category}
+            price={productEdit.price}
+            quantity={productEdit.quantity}
+          />
+        }
       />
       <table className="min-w-[720px] md:w-full mt-4 table-fixed">
         <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
@@ -43,8 +58,9 @@ const ProductTableMain = () => {
               </td>
               <td className="border-r-2 border-b-2 p-1 flex justify-center gap-1">
                 <div
+                  id={item.product_id}
                   className="cursor-pointer bg-cyan-500 p-1 rounded"
-                  onClick={modalDialogHandler}
+                  onClick={() => modalDialogHandler(item)}
                 >
                   <EditIcon />
                 </div>
