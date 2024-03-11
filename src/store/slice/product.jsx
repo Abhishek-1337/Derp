@@ -20,6 +20,28 @@ const productSlice = createSlice({
         }
       });
     },
+    deleteData(state, action) {
+      const id = action.payload;
+      console.log(action.payload);
+      const newData = state.data.filter((item) => item.product_id !== id);
+      state.data = newData;
+    },
+    addData(state, action) {
+      const length = state.data.length;
+      const obj = action.payload.values;
+      console.log(obj);
+      const newObj = {
+        product_name: obj.productName,
+        price: obj.price,
+        category: obj.category,
+        quantity_in_stock: obj.quantity,
+      };
+      console.log(newObj);
+      newObj.product_id = length + 1;
+      const updatedData = [...state.data];
+      updatedData.push(newObj);
+      state.data = updatedData;
+    },
   },
 });
 

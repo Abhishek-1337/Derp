@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import EditIcon from "../../../shared/components/EditIcon";
 import DeleteIcon from "../../../shared/components/DeleteIcon";
 import Modal from "../../../shared/components/Modal";
 import ProductForm from "../ProductForm";
+import { productActions } from "../../../store/slice/product";
 
 const ProductTableMain = () => {
+  const dispatch = useDispatch();
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
   const [productEdit, setProductEdit] = useState({});
@@ -26,6 +28,14 @@ const ProductTableMain = () => {
     setModalDialog(false);
   };
 
+  const deleteProductHandler = (item) => {
+    dispatch(productActions.deleteData(item.product_id));
+  };
+
+  const dispatchUpdateProduct = (obj) => {
+    dispatch(productActions.updateData(obj));
+  };
+
   return (
     <div className="overflow-auto p-1">
       <Modal
@@ -33,12 +43,9 @@ const ProductTableMain = () => {
         onCancel={handleModalOnCancel}
         data={
           <ProductForm
-            id={productEdit.id}
-            name={productEdit.name}
-            category={productEdit.category}
-            price={productEdit.price}
-            quantity={productEdit.quantity}
+            productDetails={productEdit}
             onCancel={handleModalOnCancel}
+            dispatchUpdateDataAction={dispatchUpdateProduct}
           />
         }
       />
@@ -67,7 +74,10 @@ const ProductTableMain = () => {
                 >
                   <EditIcon />
                 </div>
-                <div className="cursor-pointer bg-red-700 p-1 rounded">
+                <div
+                  className="cursor-pointer bg-red-700 p-1 rounded"
+                  onClick={() => deleteProductHandler(item)}
+                >
                   <DeleteIcon />
                 </div>
               </td>

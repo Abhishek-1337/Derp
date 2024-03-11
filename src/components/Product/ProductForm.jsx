@@ -1,8 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { productActions } from "../../store/slice/product";
 
 const validationSchema = Yup.object({
   productName: Yup.string()
@@ -23,22 +21,31 @@ const validationSchema = Yup.object({
     .required("Quantity value is required"),
 });
 
-const ProductForm = ({ id, name, category, price, quantity, onCancel }) => {
-  const dispatch = useDispatch();
+const ProductForm = ({
+  productDetails,
+  onCancel,
+  dispatchUpdateDataAction,
+}) => {
+  const { id } = productDetails;
+
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
-
     values.category = values.category.trim();
-    dispatch(productActions.updateData({ id, values }));
+    if (id) {
+      dispatchUpdateDataAction({ id, values });
+    } else {
+      dispatchUpdateDataAction({ values });
+      resetForm();
+    }
     onCancel();
   };
 
   useEffect(() => {
-    formik.setFieldValue("productName", name);
-    formik.setFieldValue("price", price);
-    formik.setFieldValue("category", category);
-    formik.setFieldValue("quantity", quantity);
-  }, [name, price, category, quantity]);
+    formik.setFieldValue("productName", productDetails?.name);
+    formik.setFieldValue("price", productDetails?.price);
+    formik.setFieldValue("category", productDetails?.category);
+    formik.setFieldValue("quantity", productDetails?.quantity);
+  }, [productDetails]);
 
   const formik = useFormik({
     initialValues: {
