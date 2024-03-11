@@ -41,6 +41,7 @@ const ProductTableMain = () => {
       <Modal
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
+        title="Edit Product"
         data={
           <ProductForm
             productDetails={productEdit}

@@ -21,7 +21,7 @@ const ProductTableTop = () => {
         {/*dropdown and span*/}
         <div className="w-[55px] p-1">
           <button
-            className="rounded border-2 border-myblue text-center p-1 flex justify-between gap-1 items-center shadow-md shadow-myblue"
+            className="rounded border-2 border-myblue text-center p-1 flex justify-between gap-1 items-center shadow-md shadow-myblue text-[12px] md:text-[14px]"
             onClick={toggleMenu}
           >
             {selectedOption ? selectedOption : 10}
@@ -41,7 +41,7 @@ const ProductTableTop = () => {
             </div>
           )}
         </div>
-        <span>entries per page </span>
+        <span className="text-[12px] md:text-[15px]">entries per page </span>
       </div>
       <div>
         <input
