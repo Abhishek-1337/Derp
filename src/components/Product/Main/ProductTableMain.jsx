@@ -11,6 +11,8 @@ const ProductTableMain = () => {
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
   const [productEdit, setProductEdit] = useState({});
+  const [isEditClick, setIsEditClicked] = useState(false);
+  const [itemToDeleteId, setItemToDeleteId] = useState(null);
 
   const modalDialogHandler = (item) => {
     const productDetails = {
@@ -22,6 +24,7 @@ const ProductTableMain = () => {
     };
     setProductEdit(productDetails);
     setModalDialog(true);
+    setIsEditClicked(true);
   };
 
   const handleModalOnCancel = () => {
@@ -29,7 +32,14 @@ const ProductTableMain = () => {
   };
 
   const deleteProductHandler = (item) => {
-    dispatch(productActions.deleteData(item.product_id));
+    // dispatch(productActions.deleteData(item.product_id));
+    setItemToDeleteId(item.product_id);
+    setModalDialog(true);
+    setIsEditClicked(false);
+  };
+
+  const dispatchDeleteProduct = (id) => {
+    dispatch(productActions.deleteData(id));
   };
 
   const dispatchUpdateProduct = (obj) => {
@@ -41,13 +51,33 @@ const ProductTableMain = () => {
       <Modal
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
-        title="Edit Product"
+        title={isEditClick ? "Edit Product" : "Delete Product"}
         data={
-          <ProductForm
-            productDetails={productEdit}
-            onCancel={handleModalOnCancel}
-            dispatchUpdateDataAction={dispatchUpdateProduct}
-          />
+          isEditClick ? (
+            <ProductForm
+              productDetails={productEdit}
+              onCancel={handleModalOnCancel}
+              dispatchUpdateDataAction={dispatchUpdateProduct}
+            />
+          ) : (
+            <div className="flex flex-col w-full justify-between">
+              <div className="mb-2 font-base">Are you sure?</div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => dispatchDeleteProduct(itemToDeleteId)}
+                  className="bg-red-700 text-white text-[12px] md:text-xs p-1 rounded-lg mr-2 hover:scale-110 transition-all"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={handleModalOnCancel}
+                  className="border-blue-700 border-[1px] text-blue-700 text-[12px] md:text-xs p-1 rounded-lg hover:scale-110 transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )
         }
       />
       <table className="min-w-[720px] md:w-full mt-4 table-fixed">
