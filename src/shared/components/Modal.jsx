@@ -13,6 +13,8 @@ const Modal = ({ isOpen, onCancel, data, title }) => {
     };
   }, [isOpen]);
 
+  console.log("modal");
+
   return createPortal(
     <div
       className={`${

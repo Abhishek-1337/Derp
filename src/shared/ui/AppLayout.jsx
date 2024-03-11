@@ -1,19 +1,24 @@
-import DashboardIcon from "../components/DashboardIcon";
-import ProductIcon from "../components/ProductIcon";
-import OrderIcon from "../components/OrderIcon";
+import DashboardIcon from "../icons/DashboardIcon";
+import ProductIcon from "../icons/ProductIcon";
+import OrderIcon from "../icons/OrderIcon";
 import NavItemLayout from "./NavItemLayout";
 import Logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import HamMenu from "../components/HamMenu";
-import CrossIcon from "../components/CrossIcon";
+import HamMenu from "../icons/HamMenu";
+import CrossIcon from "../icons/CrossIcon";
 import Avatar from "../components/Avatar";
 import { useState } from "react";
 
 const AppLayout = (props) => {
   const navigate = useNavigate();
   const [hamMenuFlag, setHamMenuFlag] = useState(false);
+
   const productLinkClick = () => {
     navigate("/product");
+  };
+
+  const orderLinkClick = () => {
+    navigate("/order");
   };
 
   const dashboardLinkClick = () => {
@@ -71,7 +76,7 @@ const AppLayout = (props) => {
               <p>Product</p>
             </span>
           </NavItemLayout>
-          <NavItemLayout>
+          <NavItemLayout onClick={orderLinkClick}>
             <span>
               <OrderIcon />
             </span>
