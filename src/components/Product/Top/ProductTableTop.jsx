@@ -1,4 +1,24 @@
-const ProductTableTop = ({ selectedValue, handleChange }) => {
+import { useEffect, useState } from "react";
+
+const ProductTableTop = ({
+  selectedValue,
+  handleChange,
+  searchFilterOnData,
+}) => {
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchFilterOnData(value);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value]);
+
+  const handleSearchOnChange = (e) => {
+    setValue(e.target.value);
+  };
+
   return (
     <div className=" flex items-center justify-between">
       <div className="flex items-center gap-2 text-xs">
@@ -21,8 +41,10 @@ const ProductTableTop = ({ selectedValue, handleChange }) => {
       </div>
       <div>
         <input
-          className="border-2 w-[150px] text-xs p-1 outline-none focus:border-myblue shadow-md"
-          placeholder="Search"
+          className="border-[1.19px] w-[150px] text-[12px] md:text-[14px] rounded-lg p-1 outline-none focus:border-blue-700 shadow-sm  shadow-blue-700"
+          placeholder="Search by name"
+          onChange={handleSearchOnChange}
+          value={value}
         />
       </div>
     </div>

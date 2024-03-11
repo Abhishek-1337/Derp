@@ -1,32 +1,35 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import EditIcon from "../../../shared/components/EditIcon";
-import DeleteIcon from "../../../shared/components/DeleteIcon";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import EditIcon from "../../../shared/icons/EditIcon";
+import DeleteIcon from "../../../shared/icons/DeleteIcon";
 import Modal from "../../../shared/components/Modal";
 import ProductForm from "../ProductForm";
 import { productActions } from "../../../store/slice/product";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 //Prop -> data, entries
-const ProductTableMain = ({ pageSize }) => {
+const ProductTableMain = ({ pageSize, data, pageNum }) => {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.product.data);
+
   const [modalDialog, setModalDialog] = useState(false);
   const [productEdit, setProductEdit] = useState({});
   const [isEditClick, setIsEditClicked] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(pageNum);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  // const [pageSize, setPageSize] = useState(10);
-  const totalPages = Math.ceil(productData.length / pageSize);
+  const totalPages = Math.ceil(data.length / pageSize);
 
   const handlePageChange = (pageNum) => {
     setCurrentPage(pageNum);
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [pageSize]);
+
   const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = Math.min(startIndex + pageSize, productData.length);
-  const currentPageData = productData.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + pageSize, data.length);
+  const currentPageData = data.slice(startIndex, endIndex);
 
   const modalDialogHandler = (item) => {
     const productDetails = {
@@ -96,40 +99,46 @@ const ProductTableMain = ({ pageSize }) => {
         }
       />
       <table className="min-w-[720px] md:w-full mt-4 table-fixed">
-        <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-          <th className="font-medium mr-2">NAME</th>
-          <th className="font-medium mr-2">CATEGORY</th>
-          <th className="font-medium mr-2">PRICE</th>
-          <th className="font-medium mr-2">QUANTITY</th>
-          <th className="font-medium mr-2">ACTION</th>
-        </tr>
-        {currentPageData.map((item) => {
-          return (
-            <tr key={item.product_id} className="text-center text-[14px]">
-              <td className="border-r-2 border-b-2 p-1">{item.product_name}</td>
-              <td className="border-r-2 border-b-2 p-1">{item.category}</td>
-              <td className="border-r-2 border-b-2 p-1">{item.price}</td>
-              <td className="border-r-2 border-b-2 p-1">
-                {item.quantity_in_stock}
-              </td>
-              <td className="border-r-2 border-b-2 p-1 flex justify-center gap-1">
-                <div
-                  id={item.product_id}
-                  className="cursor-pointer bg-cyan-500 p-1 rounded"
-                  onClick={() => modalDialogHandler(item)}
-                >
-                  <EditIcon />
-                </div>
-                <div
-                  className="cursor-pointer bg-red-700 p-1 rounded"
-                  onClick={() => deleteProductHandler(item)}
-                >
-                  <DeleteIcon />
-                </div>
-              </td>
-            </tr>
-          );
-        })}
+        <thead>
+          <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
+            <th className="font-medium mr-2">NAME</th>
+            <th className="font-medium mr-2">CATEGORY</th>
+            <th className="font-medium mr-2">PRICE</th>
+            <th className="font-medium mr-2">QUANTITY</th>
+            <th className="font-medium mr-2">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentPageData.map((item) => {
+            return (
+              <tr key={item.product_id} className="text-center text-[14px]">
+                <td className="border-r-2 border-b-2 p-1">
+                  {item.product_name}
+                </td>
+                <td className="border-r-2 border-b-2 p-1">{item.category}</td>
+                <td className="border-r-2 border-b-2 p-1">{item.price}</td>
+                <td className="border-r-2 border-b-2 p-1">
+                  {item.quantity_in_stock}
+                </td>
+                <td className="border-r-2 border-b-2 p-1 flex justify-center gap-1">
+                  <div
+                    id={item.product_id}
+                    className="cursor-pointer bg-cyan-500 p-1 rounded"
+                    onClick={() => modalDialogHandler(item)}
+                  >
+                    <EditIcon />
+                  </div>
+                  <div
+                    className="cursor-pointer bg-red-700 p-1 rounded"
+                    onClick={() => deleteProductHandler(item)}
+                  >
+                    <DeleteIcon />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
       <div className="flex justify-end mt-1">
         <button
