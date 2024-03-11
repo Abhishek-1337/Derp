@@ -25,11 +25,8 @@ const AppLayout = (props) => {
   };
 
   return (
-    /*nav css md:absolute md:left-[250px] md:right-0 md:w-[cal(100%-250px)] md:min-h-full md:flex md:justify-between p-3 md:mb-10*/
-
-    /*sidebar css md:absolute md:h-full md:bg-myblue md:w-[250px]*/
-    <div className="min-h-screen bg-gray-400 text-sm w-full">
-      <div className="z-10 bg-white flex justify-between w-full p-4 md:fixed md:left-[250px] md:right-0 md:w-[calc(100%-250px)]">
+    <div className="min-h-screen bg-gray-400 text-[16px] md:text-xs w-full">
+      <div className="z-10 bg-white flex justify-between w-full p-3 md:fixed md:left-[250px] md:right-0 md:w-[calc(100%-250px)] max-h-20">
         <button
           onClick={hamMenuClickHandler}
           className={`md:hidden cursor-pointer z-10  ${
@@ -42,6 +39,7 @@ const AppLayout = (props) => {
           <Avatar username="admin" />
         </div>
       </div>
+
       <div
         className={`${
           hamMenuFlag ? "" : "hidden md:block"
