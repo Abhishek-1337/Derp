@@ -1,47 +1,23 @@
-import { useState } from "react";
-import ChevronDown from "../../../shared/components/ChevronDown";
-
-const ProductTableTop = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [selectedOption, setSelectedOption] = useState(null);
-  const options = [5, 10, 15, 20];
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+const ProductTableTop = ({ selectedValue, handleChange }) => {
   return (
     <div className=" flex items-center justify-between">
       <div className="flex items-center gap-2 text-xs">
         {/*dropdown and span*/}
-        <div className="w-[55px] p-1">
-          <button
-            className="rounded border-2 border-myblue text-center p-1 flex justify-between gap-1 items-center shadow-md shadow-myblue text-[12px] md:text-[14px]"
-            onClick={toggleMenu}
+        <div className="p-1">
+          <select
+            className="border-2 rounded-lg p-1"
+            value={selectedValue}
+            onChange={handleChange}
           >
-            {selectedOption ? selectedOption : 10}
-            <ChevronDown />
-          </button>
-          {isOpen && (
-            <div className="rounded border-2 text-center absolute bg-white w-[55px]">
-              {options.map((option, index) => (
-                <div
-                  key={index}
-                  className="hover:bg-myblue hover:text-white rounded"
-                  onClick={() => handleOptionClick(option)}
-                >
-                  {option}
-                </div>
-              ))}
-            </div>
-          )}
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
         </div>
-        <span className="text-[12px] md:text-[15px]">entries per page </span>
+        <span className="text-[12px] md:text-[13px] font-thin">
+          entries per page{" "}
+        </span>
       </div>
       <div>
         <input

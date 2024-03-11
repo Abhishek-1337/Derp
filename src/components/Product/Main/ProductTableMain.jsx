@@ -5,14 +5,28 @@ import DeleteIcon from "../../../shared/components/DeleteIcon";
 import Modal from "../../../shared/components/Modal";
 import ProductForm from "../ProductForm";
 import { productActions } from "../../../store/slice/product";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
-const ProductTableMain = () => {
+//Prop -> data, entries
+const ProductTableMain = ({ pageSize }) => {
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
   const [productEdit, setProductEdit] = useState({});
   const [isEditClick, setIsEditClicked] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [pageSize, setPageSize] = useState(10);
+  const totalPages = Math.ceil(productData.length / pageSize);
+
+  const handlePageChange = (pageNum) => {
+    setCurrentPage(pageNum);
+  };
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, productData.length);
+  const currentPageData = productData.slice(startIndex, endIndex);
 
   const modalDialogHandler = (item) => {
     const productDetails = {
@@ -39,6 +53,7 @@ const ProductTableMain = () => {
   };
 
   const dispatchDeleteProduct = (id) => {
+    handleModalOnCancel();
     dispatch(productActions.deleteData(id));
   };
 
@@ -88,7 +103,7 @@ const ProductTableMain = () => {
           <th className="font-medium mr-2">QUANTITY</th>
           <th className="font-medium mr-2">ACTION</th>
         </tr>
-        {productData.map((item) => {
+        {currentPageData.map((item) => {
           return (
             <tr key={item.product_id} className="text-center text-[14px]">
               <td className="border-r-2 border-b-2 p-1">{item.product_name}</td>
@@ -116,6 +131,26 @@ const ProductTableMain = () => {
           );
         })}
       </table>
+      <div className="flex justify-end mt-1">
+        <button
+          className={`border-2 scale-105 transition-all text-blue-700 ${
+            currentPage === 1 ? "text-gray-400" : ""
+          }`}
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          <ChevronLeft />
+        </button>
+        <button
+          className={`border-2 scale-105 transition-all text-blue-700 ${
+            currentPage === totalPages ? "text-gray-400" : ""
+          }`}
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          <ChevronRight />
+        </button>
+      </div>
     </div>
   );
 };
