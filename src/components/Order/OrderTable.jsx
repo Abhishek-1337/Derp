@@ -2,7 +2,7 @@ import DeleteIcon from "../../shared/icons/DeleteIcon";
 import Modal from "../../shared/components/Modal";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
+import TableField from "../../shared/components/TableField";
 
 const OrderTable = ({ data }) => {
   const productData = useSelector((state) => state.product.data);
@@ -45,35 +45,40 @@ const OrderTable = ({ data }) => {
                 <th className="font-medium mr-2">TOTAL PRICE</th>
               </tr>
             </thead>
-
-            {orderDetails.map((order) => {
-              return (
-                <tbody key={order.product_id}>
-                  <tr className="text-center">
-                    <td className="text-[14px] mr-2 border-b-2 border-r-2 p-1">
-                      {order.product_name}
-                    </td>
-                    <td className="text-[14px] mr-2 border-b-2 border-r-2">
-                      {order.quantity}
-                    </td>
-                    <td className="text-[14px] mr-2 border-b-2 border-r-2">
-                      {order.price}
-                    </td>
-                    <td className="text-[14px] mr-2 border-b-2 border-r-2">
-                      <span className="bg-green-400 p-1 rounded-lg font-medium text-[13px]">
-                        GST 10%
-                      </span>
-                    </td>
-                    <td className="text-[14px] mr-2 border-b-2 border-r-2">
-                      {(
+            <tbody>
+              {orderDetails.map((order) => {
+                return (
+                  <tr key={order.order_id} className="text-center text-[14px]">
+                    <TableField data={order.product_name} />
+                    <TableField data={order.quantity} />
+                    <TableField data={order.price} />
+                    <TableField
+                      data={
+                        <span className="bg-green-400 p-1 rounded-lg font-medium text-[13px]">
+                          GST 10%
+                        </span>
+                      }
+                    />
+                    <TableField
+                      data={(
                         order.price * order.quantity +
                         (order.price * order.quantity * 10) / 100
                       ).toFixed(2)}
-                    </td>
+                    />
                   </tr>
-                </tbody>
-              );
-            })}
+                );
+              })}
+
+              <tr>
+                <td className="text-[14px] mr-2 border-b-2 border-r-2 p-1">
+                  Sub total
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
           </table>
         }
       />
@@ -91,38 +96,44 @@ const OrderTable = ({ data }) => {
           {data.map((item) => {
             return (
               <tr key={item.order_id} className="text-center text-[14px]">
-                <td className="border-r-2 border-b-2 ">
-                  <button
-                    className="font-medium p-1 pr-3 pl-3 rounded-lg  border-[1px] border-blue-700 text-blue-700 hover:text-white hover:bg-blue-700 cursor-pointer transition-all"
-                    onClick={() => modalDialogHandler(item)}
-                  >
-                    {item.order_id}
-                  </button>
-                </td>
-                <td className="border-r-2 border-b-2 p-1">
-                  {item.customer_name}
-                </td>
-                <td className="border-r-2 border-b-2 p-1">{item.order_date}</td>
-                <td className="border-r-2 border-b-2 p-1">
-                  <span
-                    className={`${
-                      item.status === "Delivered" && "bg-green-300"
-                    } ${item.status === "Return" && "bg-red-300"}
+                <TableField
+                  data={
+                    <button
+                      className="font-medium p-1 pr-3 pl-3 rounded-lg  border-[1px] border-blue-700 text-blue-700 hover:text-white hover:bg-blue-700 cursor-pointer transition-all"
+                      onClick={() => modalDialogHandler(item)}
+                    >
+                      {item.order_id}
+                    </button>
+                  }
+                  additionalStyles="p-0"
+                />
+                <TableField data={item.customer_name} />
+                <TableField data={item.order_date} />
+                <TableField
+                  data={
+                    <span
+                      className={`${
+                        item.status === "Delivered" && "bg-green-300"
+                      } ${item.status === "Return" && "bg-red-300"}
                     ${item.status === "Pending" && "bg-yellow-300"}
                     ${item.status === "In progress" && "bg-blue-300"}
                      p-1 pr-2 pl-2 rounded-lg text-[12px] font-medium`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td className="border-r-2 border-b-2 p-1 flex justify-center gap-1">
-                  <div
-                    className="cursor-pointer bg-red-700 p-1 rounded"
-                    onClick={() => deleteProductHandler(item)}
-                  >
-                    <DeleteIcon />
-                  </div>
-                </td>
+                    >
+                      {item.status}
+                    </span>
+                  }
+                />
+                <TableField
+                  data={
+                    <div
+                      className="cursor-pointer bg-red-700 p-1 rounded"
+                      onClick={() => deleteProductHandler(item)}
+                    >
+                      <DeleteIcon />
+                    </div>
+                  }
+                  additionalStyles="flex justify-center gap-1"
+                />
               </tr>
             );
           })}

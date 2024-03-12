@@ -6,6 +6,7 @@ import Modal from "../../../shared/components/Modal";
 import ProductForm from "../ProductForm";
 import { productActions } from "../../../store/slice/product";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import TableField from "../../../shared/components/TableField";
 
 //Prop -> data, entries
 const ProductTableMain = ({ pageSize, data, pageNum }) => {
@@ -112,29 +113,30 @@ const ProductTableMain = ({ pageSize, data, pageNum }) => {
           {currentPageData.map((item) => {
             return (
               <tr key={item.product_id} className="text-center text-[14px]">
-                <td className="border-r-2 border-b-2 p-1">
-                  {item.product_name}
-                </td>
-                <td className="border-r-2 border-b-2 p-1">{item.category}</td>
-                <td className="border-r-2 border-b-2 p-1">{item.price}</td>
-                <td className="border-r-2 border-b-2 p-1">
-                  {item.quantity_in_stock}
-                </td>
-                <td className="border-r-2 border-b-2 p-1 flex justify-center gap-1">
-                  <div
-                    id={item.product_id}
-                    className="cursor-pointer bg-cyan-500 p-1 rounded"
-                    onClick={() => modalDialogHandler(item)}
-                  >
-                    <EditIcon />
-                  </div>
-                  <div
-                    className="cursor-pointer bg-red-700 p-1 rounded"
-                    onClick={() => deleteProductHandler(item)}
-                  >
-                    <DeleteIcon />
-                  </div>
-                </td>
+                <TableField data={item.product_name} />
+                <TableField data={item.category} />
+                <TableField data={item.price} />
+                <TableField data={item.quantity_in_stock} />
+                <TableField
+                  data={
+                    <>
+                      <div
+                        id={item.product_id}
+                        className="cursor-pointer bg-cyan-500 p-1 rounded"
+                        onClick={() => modalDialogHandler(item)}
+                      >
+                        <EditIcon />
+                      </div>
+                      <div
+                        className="cursor-pointer bg-red-700 p-1 rounded"
+                        onClick={() => deleteProductHandler(item)}
+                      >
+                        <DeleteIcon />
+                      </div>
+                    </>
+                  }
+                  additionalStyles="flex justify-center gap-1"
+                />
               </tr>
             );
           })}
