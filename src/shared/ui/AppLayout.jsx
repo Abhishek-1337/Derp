@@ -6,6 +6,7 @@ import Logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import HamMenu from "../icons/HamMenu";
 import CrossIcon from "../icons/CrossIcon";
+import CalendarIcon from "../icons/CalendarIcon";
 import Avatar from "../components/Avatar";
 import { useState } from "react";
 
@@ -25,6 +26,9 @@ const AppLayout = (props) => {
     navigate("/");
   };
 
+  const calendarLinkClick = () => {
+    navigate("/calendar");
+  };
   const hamMenuClickHandler = () => {
     setHamMenuFlag((hamMenuFlag) => !hamMenuFlag);
   };
@@ -81,6 +85,12 @@ const AppLayout = (props) => {
               <OrderIcon />
             </span>
             <span>Order</span>
+          </NavItemLayout>
+          <NavItemLayout onClick={calendarLinkClick}>
+            <span>
+              <CalendarIcon />
+            </span>
+            <span>Calendar</span>
           </NavItemLayout>
         </ul>
       </div>
