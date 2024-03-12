@@ -1,14 +1,19 @@
 import DeleteIcon from "../../shared/icons/DeleteIcon";
 import Modal from "../../shared/components/Modal";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TableField from "../../shared/components/TableField";
+import DeleteDataInModal from "../../shared/components/DeleteDataInModal";
+import { orderActions } from "../../store/slice/order";
+import OrderEditableField from "./OrderEditableField";
 
 const OrderTable = ({ data }) => {
+  const dispatch = useDispatch();
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+  const [orderToBeDeleted, setOrderToBeDeleted] = useState(null);
 
   const calculateTaxOnItem = (order) => {
     return (
@@ -40,6 +45,17 @@ const OrderTable = ({ data }) => {
 
   const handleModalOnCancel = () => {
     setModalDialog(false);
+    setOrderToBeDeleted(null);
+  };
+
+  const deleteOrderHandler = (order) => {
+    setModalDialog(true);
+    setOrderToBeDeleted(order.order_id);
+  };
+
+  const dispatchDeleteOrder = (id) => {
+    dispatch(orderActions.deleteOrder(id));
+    handleModalOnCancel();
   };
 
   return (
@@ -47,46 +63,60 @@ const OrderTable = ({ data }) => {
       <Modal
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
-        title="Order details"
+        title={orderToBeDeleted ? "Delete order" : "Order details"}
+        additionalStyles={`${
+          orderToBeDeleted ? "max-w-[500px]" : "min-w-[900px]"
+        }`}
         data={
-          <table className=" w-full mt-4 table-fixed">
-            <thead>
-              <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-                <th className="font-medium mr-2">PRODUCT</th>
-                <th className="font-medium mr-2">QUANTITY</th>
-                <th className="font-medium mr-2">PRICE</th>
-                <th className="font-medium mr-2">TAX</th>
-                <th className="font-medium mr-2">TOTAL PRICE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderDetails.map((order) => {
-                return (
-                  <tr key={order.order_id} className="text-center text-[14px]">
-                    <TableField data={order.product_name} />
-                    <TableField data={order.quantity} />
-                    <TableField data={order.price} />
-                    <TableField
-                      data={
-                        <span className="bg-green-400 p-1 rounded-lg font-medium text-[13px]">
-                          GST 10%
-                        </span>
-                      }
-                    />
-                    <TableField data={calculateTaxOnItem(order)} />
-                  </tr>
-                );
-              })}
+          orderToBeDeleted ? (
+            <DeleteDataInModal
+              handleModalOnCancel={handleModalOnCancel}
+              dispatchDeleteItem={dispatchDeleteOrder}
+              itemToDeleteId={orderToBeDeleted}
+            />
+          ) : (
+            <table className=" w-full mt-4 table-fixed">
+              <thead>
+                <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
+                  <th className="font-medium mr-2">PRODUCT</th>
+                  <th className="font-medium mr-2">QUANTITY</th>
+                  <th className="font-medium mr-2">PRICE</th>
+                  <th className="font-medium mr-2">TAX</th>
+                  <th className="font-medium mr-2">TOTAL PRICE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderDetails.map((order) => {
+                  return (
+                    <tr
+                      key={order.order_id}
+                      className="text-center text-[14px]"
+                    >
+                      <TableField data={order.product_name} />
+                      <TableField data={order.quantity} />
+                      <TableField data={order.price} />
+                      <TableField
+                        data={
+                          <span className="bg-green-400 p-1 rounded-lg font-medium text-[13px]">
+                            GST 10%
+                          </span>
+                        }
+                      />
+                      <TableField data={calculateTaxOnItem(order)} />
+                    </tr>
+                  );
+                })}
 
-              <tr className=" text-center text-[14px] bg-gray-400">
-                <TableField data="Sub total" />
-                <TableField />
-                <TableField />
-                <TableField />
-                <TableField data={subTotal.toFixed(2)} />
-              </tr>
-            </tbody>
-          </table>
+                <tr className=" text-center text-[14px] bg-gray-400">
+                  <TableField data="Sub total" />
+                  <TableField />
+                  <TableField />
+                  <TableField />
+                  <TableField data={subTotal.toFixed(2)} />
+                </tr>
+              </tbody>
+            </table>
+          )
         }
       />
       <table className="min-w-[720px] md:w-full mt-4 table-fixed">
@@ -116,30 +146,17 @@ const OrderTable = ({ data }) => {
                 />
                 <TableField data={item.customer_name} />
                 <TableField data={item.order_date} />
+
+                <OrderEditableField item={item} />
                 <TableField
                   data={
-                    <span
-                      className={`${
-                        item.status === "Delivered" && "bg-green-300"
-                      } ${item.status === "Return" && "bg-red-300"}
-                    ${item.status === "Pending" && "bg-yellow-300"}
-                    ${item.status === "In progress" && "bg-blue-300"}
-                     p-1 pr-2 pl-2 rounded-lg text-[12px] font-medium`}
-                    >
-                      {item.status}
-                    </span>
-                  }
-                />
-                <TableField
-                  data={
-                    <div
+                    <button
                       className="cursor-pointer bg-red-700 p-1 rounded"
-                      onClick={() => deleteProductHandler(item)}
+                      onClick={() => deleteOrderHandler(item)}
                     >
                       <DeleteIcon />
-                    </div>
+                    </button>
                   }
-                  additionalStyles="flex justify-center gap-1"
                 />
               </tr>
             );

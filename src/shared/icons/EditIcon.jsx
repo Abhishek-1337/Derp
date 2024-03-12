@@ -1,4 +1,4 @@
-const EditIcon = () => {
+const EditIcon = ({ additionalStyles }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,7 @@ const EditIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-3 h-3 text-white"
+      className={` w-3 h-3 ${additionalStyles}`}
     >
       <path
         strokeLinecap="round"
