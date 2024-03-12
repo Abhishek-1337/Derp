@@ -1,17 +1,18 @@
-import { useState } from "./CalendarTop";
+import { useState } from "react";
 import AppLayout from "../../shared/ui/AppLayout";
 import MainBodyLayout from "../../shared/ui/MainBodyLayout";
 import CalendarTop from "./CalendarTop";
+import CalendarMain from "./CalendarMain";
 
 const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   return (
     <AppLayout>
       <MainBodyLayout>
-        <CalendarTop
-          currentDate={currentDate}
-          setCurrentnDate={setCurrentDate}
-        />
+        <div className="w-full bg-white rounded-lg p-3">
+          <CalendarTop date={date} setDate={setDate} />
+          <CalendarMain date={date} />
+        </div>
       </MainBodyLayout>
     </AppLayout>
   );
