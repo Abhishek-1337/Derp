@@ -1,3 +1,5 @@
+import Day from "./Day";
+
 const CalendarMain = ({ date }) => {
   const generateDays = () => {
     const days = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -24,16 +26,7 @@ const CalendarMain = ({ date }) => {
           );
         })}
         {generateDays().map((day, index) => {
-          return (
-            <div
-              key={index}
-              className={`${
-                day == null ? "bg-red-300" : ""
-              } bg-blue-300 border-2 p-4`}
-            >
-              {day !== null && day}
-            </div>
-          );
+          return <Day day={day} key={index} date={date} />;
         })}
       </div>
       <div className="grid grid-cols-7 font-medium text-lg text-center"></div>
