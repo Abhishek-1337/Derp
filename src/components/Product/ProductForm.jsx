@@ -47,6 +47,8 @@ const ProductForm = ({
     formik.setFieldValue("quantity", productDetails?.quantity);
   }, [productDetails]);
 
+  console.log("productdetals");
+
   const formik = useFormik({
     initialValues: {
       productName: "",

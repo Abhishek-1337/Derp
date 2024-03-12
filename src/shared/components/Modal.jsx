@@ -29,7 +29,7 @@ const Modal = ({ isOpen, onCancel, data, title }) => {
         <header className="bg-gray-500 rounded-t-2xl p-2 text-center text-white font-medium ">
           {title}
         </header>
-        <section className="flex items-center justify-center bg-white p-4 ">
+        <section className="flex items-center justify-center bg-white p-4 overflow-x-auto">
           {data}
         </section>
         <footer className="bg-gray-500 rounded-b-2xl p-2 text-center text-white font-medium  shadow-lg shadow-gray-300"></footer>

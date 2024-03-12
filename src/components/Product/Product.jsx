@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import MainBodyTopBar from "../../shared/components/MainBodyTopBar";
 
 const Product = () => {
+  console.log("HELLO");
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();

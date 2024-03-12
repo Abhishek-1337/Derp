@@ -8,10 +8,19 @@ const OrderTable = ({ data }) => {
   const productData = useSelector((state) => state.product.data);
   const [modalDialog, setModalDialog] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
 
-  const modalDialogHandler = (item) => {
-    const orderedItems = item.order_items;
+  const calculateTaxOnItem = (order) => {
+    return (
+      order.price * order.quantity +
+      (order.price * order.quantity * 10) / 100
+    ).toFixed(2);
+  };
+
+  const modalDialogHandler = (userOrder) => {
+    const orderedItems = userOrder.order_items;
     const result = [];
+    let total = 0;
     orderedItems.forEach((order) => {
       let orderedProduct = productData.filter(
         (product) => product.product_id === order.product_id
@@ -20,8 +29,11 @@ const OrderTable = ({ data }) => {
       const newObj = { ...obj };
       newObj.quantity = order.quantity;
       delete newObj.quantity_in_stock;
+      total += +calculateTaxOnItem(newObj);
+      console.log(total);
       result.push(newObj);
     });
+    setSubTotal(total);
     setOrderDetails(result);
     setModalDialog(true);
   };
@@ -29,13 +41,15 @@ const OrderTable = ({ data }) => {
   const handleModalOnCancel = () => {
     setModalDialog(false);
   };
+
   return (
     <div className="overflow-auto mt-4 bg-white rounded-lg p-2  shadow-lg shadow-gray-700">
       <Modal
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
+        title="Order details"
         data={
-          <table className=" md:w-full mt-4 table-fixed">
+          <table className=" w-full mt-4 table-fixed">
             <thead>
               <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
                 <th className="font-medium mr-2">PRODUCT</th>
@@ -59,24 +73,17 @@ const OrderTable = ({ data }) => {
                         </span>
                       }
                     />
-                    <TableField
-                      data={(
-                        order.price * order.quantity +
-                        (order.price * order.quantity * 10) / 100
-                      ).toFixed(2)}
-                    />
+                    <TableField data={calculateTaxOnItem(order)} />
                   </tr>
                 );
               })}
 
-              <tr>
-                <td className="text-[14px] mr-2 border-b-2 border-r-2 p-1">
-                  Sub total
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <tr className=" text-center text-[14px] bg-gray-400">
+                <TableField data="Sub total" />
+                <TableField />
+                <TableField />
+                <TableField />
+                <TableField data={subTotal.toFixed(2)} />
               </tr>
             </tbody>
           </table>
