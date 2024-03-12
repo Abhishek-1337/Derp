@@ -12,13 +12,14 @@ const CalendarTop = ({ date, setDate }) => {
   return (
     <div className="flex items-center justify-center mb-4">
       <button onClick={prevMonth}>
-        <ChevronLeft />
+        <ChevronLeft additionalStyles="text-white" />
       </button>
       <h2 className="text-lg min-w-[180px] text-center font-medium">
         {date.toLocaleString("default", { month: "long", year: "numeric" })}
       </h2>
+
       <button onClick={nextMonth}>
-        <ChevronRight />
+        <ChevronRight additionalStyles="text-white" />
       </button>
     </div>
   );
