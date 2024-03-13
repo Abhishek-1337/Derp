@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { productActions } from "../../store/slice/product";
 import { useNavigate } from "react-router-dom";
 import MainBodyTopBar from "../../shared/components/MainBodyTopBar";
+import PrimaryButton from "../../shared/components/PrimaryButton";
 
 const Product = () => {
-  console.log("HELLO");
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,12 +39,10 @@ const Product = () => {
             section="&gt; Product & Services"
             homeNavigationHandler={homeNavigationHandler}
           />
-          <button
-            className="p-3 pt-1 pb-1 max-h-[50px] leading-none md:max-h-[40px] bg-blue-700 text-white rounded-xl text-[12px] md:text-xs font-medium shadow-white shadow-sm hover:scale-105 transition-all"
-            onClick={modalOpenHandler}
-          >
-            Create Product
-          </button>
+          <PrimaryButton
+            modalOpenHandler={modalOpenHandler}
+            title="Create product"
+          />
           <Modal
             isOpen={modalOpen}
             onCancel={modalCloseHandler}
