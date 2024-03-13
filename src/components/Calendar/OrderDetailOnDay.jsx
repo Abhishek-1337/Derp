@@ -13,7 +13,7 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
         isOpen={modalDialog}
         onCancel={handleModalOnCancel}
         title="Order details"
-        additionalStyles="min-w-[900px]"
+        additionalStyles="min-w-[500px] font-medium"
         data={
           <table className=" w-full mt-4 table-fixed">
             <thead>
@@ -39,7 +39,7 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
       <div
         className={`${
           day == null ? "bg-red-300" : ""
-        } bg-blue-300 border-2 p-4 relative ${
+        } bg-blue-300 border-2 p-2 text-sm relative ${
           orderDeliveries.length !== 0 &&
           "bg-green-500 text-white cursor-pointer"
         }`}
