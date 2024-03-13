@@ -7,35 +7,48 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
   const handleModalOnCancel = () => {
     setModalDialog(false);
   };
+
+  function orderDetailModal() {
+    setModalDialog(true);
+  }
+
+  const handleClick = () => {
+    orderDeliveries.length !== 0 && orderDetailModal();
+  };
   return (
     <>
-      <Modal
-        isOpen={modalDialog}
-        onCancel={handleModalOnCancel}
-        title="Order details"
-        additionalStyles="min-w-[500px] font-medium"
-        data={
-          <table className=" w-full mt-4 table-fixed">
-            <thead>
-              <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-                <th className="font-medium mr-2">CUSTOMER</th>
-                <th className="font-medium mr-2">ORDER ID</th>
-                {/* <th className="font-medium mr-2">PRICE</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {orderDeliveries.map((order) => {
-                return (
-                  <tr key={order.order_id} className="text-center text-[14px]">
-                    <TableField data={order.customer_name} />
-                    <TableField data={order.order_id} />
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        }
-      />
+      {modalDialog && (
+        <Modal
+          isOpen={modalDialog}
+          onCancel={handleModalOnCancel}
+          title="Order details"
+          additionalStyles="min-w-[500px] font-medium"
+          data={
+            <table className=" w-full mt-4 table-fixed">
+              <thead>
+                <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
+                  <th className="font-medium mr-2">CUSTOMER</th>
+                  <th className="font-medium mr-2">ORDER ID</th>
+                  {/* <th className="font-medium mr-2">PRICE</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {orderDeliveries.map((order) => {
+                  return (
+                    <tr
+                      key={order.order_id}
+                      className="text-center text-[14px]"
+                    >
+                      <TableField data={order.customer_name} />
+                      <TableField data={order.order_id} />
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          }
+        />
+      )}
       <div
         className={`${
           day == null ? "bg-red-300" : ""
@@ -43,12 +56,7 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
           orderDeliveries.length !== 0 &&
           "bg-green-500 text-white cursor-pointer"
         }`}
-        onClick={
-          orderDeliveries.length !== 0 &&
-          function () {
-            return setModalDialog(true);
-          }
-        }
+        onClick={handleClick}
       >
         {day !== null && day}
         {orderDeliveries.length !== 0 && (

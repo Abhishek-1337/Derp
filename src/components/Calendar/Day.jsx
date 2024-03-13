@@ -19,7 +19,6 @@ const Day = ({ day, date }) => {
       orderDeliveries.push(order);
     }
   });
-  console.log(orderDeliveries);
   return (
     <>
       <OrderDetailOnDay day={day} orderDeliveries={orderDeliveries} />

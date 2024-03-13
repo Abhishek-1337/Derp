@@ -11,8 +11,12 @@ const CalendarTop = ({ date, setDate }) => {
   };
   return (
     <div className="flex items-center justify-center mb-4">
-      <button onClick={prevMonth}>
-        <ChevronLeft additionalStyles="text-white" />
+      <button onClick={prevMonth} disabled={new Date() > date}>
+        <ChevronLeft
+          additionalStyles={`${
+            new Date() > date ? "bg-blue-200" : ""
+          } text-white`}
+        />
       </button>
       <h2 className="text-lg min-w-[180px] text-center font-medium">
         {date.toLocaleString("default", { month: "long", year: "numeric" })}
