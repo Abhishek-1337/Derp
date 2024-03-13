@@ -1,15 +1,15 @@
 import DeleteIcon from "../../shared/icons/DeleteIcon";
 import Modal from "../../shared/components/Modal";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import TableField from "../../shared/components/TableField";
 import DeleteDataInModal from "../../shared/components/DeleteDataInModal";
 import { orderActions } from "../../store/slice/order";
 import OrderEditableField from "./OrderEditableField";
 
-const OrderTable = ({ data }) => {
+const OrderTable = ({ orderData, productData }) => {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.product.data);
+
   const [modalDialog, setModalDialog] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
@@ -130,7 +130,7 @@ const OrderTable = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => {
+          {orderData.map((item) => {
             return (
               <tr key={item.order_id} className="text-center text-[14px]">
                 <TableField
