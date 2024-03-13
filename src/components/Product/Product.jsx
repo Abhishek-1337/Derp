@@ -4,7 +4,7 @@ import MainBodyLayout from "../../shared/ui/MainBodyLayout";
 import ProductTable from "./ProductTable";
 import Modal from "../../shared/components/Modal";
 import ProductForm from "./ProductForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../../store/slice/product";
 import { useNavigate } from "react-router-dom";
 import MainBodyTopBar from "../../shared/components/MainBodyTopBar";
@@ -12,6 +12,8 @@ import PrimaryButton from "../../shared/components/PrimaryButton";
 
 const Product = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const productData = useSelector((state) => state.product.data);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,10 +41,7 @@ const Product = () => {
             section="&gt; Product & Services"
             homeNavigationHandler={homeNavigationHandler}
           />
-          <PrimaryButton
-            modalOpenHandler={modalOpenHandler}
-            title="Create product"
-          />
+          <PrimaryButton onClick={modalOpenHandler} title="Create product" />
           <Modal
             isOpen={modalOpen}
             onCancel={modalCloseHandler}
@@ -56,6 +55,7 @@ const Product = () => {
                   quantity: 0,
                 }}
                 onCancel={modalCloseHandler}
+                productData={productData}
                 dispatchUpdateDataAction={dispatchAddDataProduct}
               />
             }

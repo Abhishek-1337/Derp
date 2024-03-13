@@ -1,21 +1,21 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import * as Yup from "yup";
+import { uniqueProduct } from "../../shared/utils/validate";
 
 const validationSchema = Yup.object({
   productName: Yup.string()
     .min(3, "Product name must be at least 3 characters")
     .max(30, "Product name must be at most 15 characters")
-    .required("Product name is required"),
+    .required("Product name is required")
+    .test("is-unique", "Product name already exist", function (value) {
+      return uniqueProduct(value);
+    }),
   price: Yup.number()
     .min(5, "Price value must be atleast 5")
     .max(5000, "Price value must be atmost 5000")
     .required("Price value is required"),
-  category: Yup.string()
-    .min(4, "Category name must be atleast 5 characters")
-    .max(15, "Category name must be at most 15 characters")
-    .required("Category is required"),
+  category: Yup.string().required("Category is required"),
   quantity: Yup.number()
     .min(1, "Quantity value must be atleast 5")
     .max(5000, "Quantity value must be atmost 5000")
@@ -26,9 +26,9 @@ const ProductForm = ({
   productDetails,
   onCancel,
   dispatchUpdateDataAction,
+  productData,
 }) => {
   const { id } = productDetails;
-  const productData = useSelector((state) => state.product.data);
 
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
