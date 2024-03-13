@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -27,6 +28,7 @@ const ProductForm = ({
   dispatchUpdateDataAction,
 }) => {
   const { id } = productDetails;
+  const productData = useSelector((state) => state.product.data);
 
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
@@ -74,6 +76,7 @@ const ProductForm = ({
           <input
             className=" text-black outline-none border-2 border-gray-400 p-2 h-7 rounded-xl"
             type="text"
+            id="productName"
             name="productName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -94,18 +97,23 @@ const ProductForm = ({
         >
           Category:
         </label>
-        <div className="">
-          <input
-            className=" text-black outline-none border-2 border-gray-400 p-2 h-7 rounded-xl"
-            type="text"
-            name="category"
+        <div>
+          <select
+            id="category"
+            className="outline-none rounded-lg border-2 border-gray-400 p-1"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             value={formik.values.category}
-          />
-          {formik.touched.category && formik.errors.category ? (
+          >
+            <option className="font-medium">Category</option>
+            {[...new Set(productData.map((product) => product.category))].map(
+              (category) => {
+                return <option key={category}>{category}</option>;
+              }
+            )}
+          </select>
+          {formik.touched.categoryDropdown && formik.errors.categoryDropdown ? (
             <div className="text-red-600 text-[10px]">
-              {formik.errors.category}
+              {formik.errors.categoryDropdown}
             </div>
           ) : null}
         </div>
@@ -121,6 +129,7 @@ const ProductForm = ({
           <input
             className=" text-black outline-none border-2 border-gray-400 p-2 h-7 rounded-xl"
             type="number"
+            id="price"
             name="price"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -144,6 +153,7 @@ const ProductForm = ({
           <input
             className=" text-black outline-none border-2 border-gray-400 p-2 h-7 rounded-xl"
             type="number"
+            id="quantity"
             name="quantity"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
