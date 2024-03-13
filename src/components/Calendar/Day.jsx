@@ -15,7 +15,18 @@ const Day = ({ day, date }) => {
 
   const orderDeliveries = [];
   orderData.forEach((order) => {
-    if (order.delivery_date === currDate) {
+    console.log(order.delivery_date);
+    console.log(
+      new Date().toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    );
+    if (
+      order.delivery_date === currDate &&
+      new Date(order.delivery_date) > new Date()
+    ) {
       orderDeliveries.push(order);
     }
   });
