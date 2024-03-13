@@ -8,10 +8,13 @@ import OrderIcon from "../../shared/icons/OrderIcon";
 import TotalPriceIcon from "../../shared/icons/TotalPriceIcon";
 import { useSelector } from "react-redux";
 import TableField from "../../shared/components/TableField";
+import PrimaryButton from "../../shared/components/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const productData = useSelector((state) => state.product.data);
   const orderData = useSelector((state) => state.order.data);
+  const navigate = useNavigate();
 
   const categoryCount = [
     ...new Set(productData.map((product) => product.category)),
@@ -22,6 +25,10 @@ const Dashboard = () => {
       accumulator + product.quantity_in_stock * product.price,
     0
   );
+
+  const handleMoreOrdersClick = () => {
+    navigate("/orders");
+  };
   return (
     <AppLayout>
       <MainBodyLayout>
@@ -56,7 +63,7 @@ const Dashboard = () => {
           />
         </div>
         <div className="overflow-auto mt-10 bg-white rounded-lg p-4  shadow-lg shadow-gray-700">
-          <h2 className="text-center font-medium">Recent Orders</h2>
+          <h2 className="text-center font-medium text-base">Recent Orders</h2>
           <table className="min-w-[720px] md:w-full mt-4 table-fixed">
             <thead>
               <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
@@ -88,6 +95,12 @@ const Dashboard = () => {
               })}
             </tbody>
           </table>
+          <div>
+            <PrimaryButton
+              title="More orders"
+              onClick={handleMoreOrdersClick}
+            />
+          </div>
         </div>
       </MainBodyLayout>
     </AppLayout>
