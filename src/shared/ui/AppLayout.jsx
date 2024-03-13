@@ -15,11 +15,11 @@ const AppLayout = (props) => {
   const [hamMenuFlag, setHamMenuFlag] = useState(false);
 
   const productLinkClick = () => {
-    navigate("/product");
+    navigate("/products");
   };
 
   const orderLinkClick = () => {
-    navigate("/order");
+    navigate("/orders");
   };
 
   const dashboardLinkClick = () => {
@@ -52,7 +52,7 @@ const AppLayout = (props) => {
       <div
         className={`${
           hamMenuFlag ? "" : "hidden md:block"
-        } fixed top-0 w-[50%] min-h-full bg-myblue md:w-[250px]`}
+        } fixed z-20 top-0 w-[50%] min-h-full bg-myblue md:w-[250px]`}
       >
         <ul className="p-2 pr-0">
           <li className="text-white mb-16 flex flex-row items-center cursor-pointer">

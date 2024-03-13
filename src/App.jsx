@@ -11,8 +11,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/product" element={<Product data={productData} />} />
-        <Route path="/order" element={<Order />} />
+        <Route path="/products" element={<Product data={productData} />} />
+        <Route path="/orders" element={<Order />} />
         <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </>
