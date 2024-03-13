@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { createSlice } from "@reduxjs/toolkit";
 import orders from "../../../data/order.json";
 
@@ -25,7 +26,7 @@ const orderSlice = createSlice({
     },
     createOrder(state, action) {
       const orders = state.data;
-      const newOrderId = `#${orders.length + 1}`;
+      const newOrderId = `#${uuid().slice(0, 8)}`;
       const randomDeliveryDate = new Date(
         new Date().getTime() +
           Math.floor(Math.random() * 21) * 24 * 60 * 60 * 1000
@@ -39,7 +40,7 @@ const orderSlice = createSlice({
           day: "numeric",
           year: "numeric",
         }),
-        delivery_data: randomDeliveryDate.toLocaleDateString("en-US", {
+        delivery_date: randomDeliveryDate.toLocaleDateString("en-US", {
           month: "long",
           day: "numeric",
           year: "numeric",
