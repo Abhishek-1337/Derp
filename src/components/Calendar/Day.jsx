@@ -25,7 +25,8 @@ const Day = ({ day, date }) => {
     );
     if (
       order.delivery_date === currDate &&
-      new Date(order.delivery_date) > new Date()
+      new Date(order.delivery_date) > new Date() &&
+      order.status !== "Delivered"
     ) {
       orderDeliveries.push(order);
     }
