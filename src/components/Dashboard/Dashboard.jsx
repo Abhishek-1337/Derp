@@ -63,7 +63,7 @@ const Dashboard = () => {
           />
         </div>
         <div className="overflow-auto mt-10 bg-white rounded-lg p-4  shadow-lg shadow-gray-700">
-          <h2 className="text-center font-medium text-base">Recent Orders</h2>
+          <h2 className="text-center font-medium text-base">Latest 3 orders</h2>
           <table className="min-w-[720px] md:w-full mt-4 table-fixed">
             <thead>
               <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
@@ -95,7 +95,7 @@ const Dashboard = () => {
               })}
             </tbody>
           </table>
-          <div>
+          <div className="mt-4 text-end">
             <PrimaryButton
               title="More orders"
               onClick={handleMoreOrdersClick}
