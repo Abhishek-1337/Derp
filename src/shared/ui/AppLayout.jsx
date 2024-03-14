@@ -35,7 +35,7 @@ const AppLayout = (props) => {
 
   return (
     <div className="min-h-screen bg-gray-400 text-[16px] md:text-xs w-full">
-      <div className="z-10 bg-white flex justify-between w-full p-3 md:fixed md:left-[250px] md:right-0 md:w-[calc(100%-250px)] max-h-20">
+      <div className="z-10 bg-white flex justify-between w-full p-4 pb-2 md:fixed md:left-[250px] md:right-0 md:w-[calc(100%-250px)] max-h-20">
         <button
           onClick={hamMenuClickHandler}
           className={`md:hidden cursor-pointer z-10  ${
