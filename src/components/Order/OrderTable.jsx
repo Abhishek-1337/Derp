@@ -14,7 +14,10 @@ const OrderTable = ({ orderData, productData }) => {
   const searchFilterOnData = (value) => {
     if (value !== "") {
       const results = orderData.filter((item) => {
-        return item.customer_name.toLowerCase().includes(value?.toLowerCase());
+        return (
+          item.customer_name.toLowerCase().includes(value?.toLowerCase()) ||
+          item.order_id.toLowerCase().includes(value?.toLowerCase())
+        );
       });
       setSearchedQuery(value);
       setSearchResults(results);
