@@ -19,7 +19,7 @@ const Alert = ({ data }) => {
     <>
       {visible && (
         <div
-          className={`fixed bottom-[15%] rounded-xl text-white text-sm p-3 left-[50%] shadow-md shadow-white ${
+          className={`min-w-max fixed bottom-[15%] rounded-xl text-white text-sm p-3 left-[50%] translate-x-[-50%] shadow-md shadow-white ${
             data.status === "success" ? "bg-green-600" : "bg-red-600"
           }`}
         >
