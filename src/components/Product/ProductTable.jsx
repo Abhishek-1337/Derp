@@ -28,7 +28,6 @@ const ProductTable = () => {
       setSearchResults([]);
     }
   };
-  console.log(searchResults.length);
   return (
     <div className="overflow-auto mt-4 bg-white rounded-lg p-2  shadow-lg shadow-gray-700">
       <TableTop

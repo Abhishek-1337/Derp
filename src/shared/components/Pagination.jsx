@@ -3,7 +3,6 @@ import ChevronRight from "../icons/ChevronRight";
 import { useState, useEffect } from "react";
 
 const Pagination = ({ pageSize, data, setCurrentPageData }) => {
-  console.log("hello");
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (pageNum) => {
@@ -13,13 +12,15 @@ const Pagination = ({ pageSize, data, setCurrentPageData }) => {
   useEffect(() => {
     setCurrentPage(1);
   }, [pageSize]);
+
   const totalPages = Math.ceil(data.length / pageSize);
-  console.log(totalPages + " " + currentPage);
+
   useEffect(() => {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = Math.min(startIndex + pageSize, data.length);
     setCurrentPageData(data.slice(startIndex, endIndex));
   }, [currentPage, pageSize, data]);
+
   return (
     <div className="flex justify-end mt-1">
       <button

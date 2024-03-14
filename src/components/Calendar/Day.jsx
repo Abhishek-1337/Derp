@@ -15,14 +15,6 @@ const Day = ({ day, date }) => {
 
   const orderDeliveries = [];
   orderData.forEach((order) => {
-    console.log(order.delivery_date);
-    console.log(
-      new Date().toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
-    );
     if (
       order.delivery_date === currDate &&
       new Date(order.delivery_date) > new Date() &&

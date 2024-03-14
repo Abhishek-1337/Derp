@@ -42,7 +42,6 @@ const ProductForm = ({
   useEffect(() => {
     let schema;
     if (productDetails.name !== "") {
-      console.log("hellomoto");
       schema = Yup.object({
         productName: Yup.string()
           .min(3, "Product name must be at least 3 characters")

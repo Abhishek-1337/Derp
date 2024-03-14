@@ -10,7 +10,6 @@ import DeleteDataInModal from "../../../shared/components/DeleteDataInModal";
 import Pagination from "../../../shared/components/Pagination";
 import TableHead from "../../../shared/components/TableHead";
 
-//Prop -> data, entries
 const ProductTableMain = ({ pageSize, data }) => {
   const dispatch = useDispatch();
   const [modalDialog, setModalDialog] = useState(false);
@@ -41,7 +40,6 @@ const ProductTableMain = ({ pageSize, data }) => {
   };
 
   const deleteProductHandler = (item) => {
-    // dispatch(productActions.deleteData(item.product_id));
     setItemToDeleteId(item.product_id);
     setModalDialog(true);
     setIsEditClicked(false);
