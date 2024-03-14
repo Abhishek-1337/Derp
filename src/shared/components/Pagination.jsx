@@ -27,7 +27,7 @@ const Pagination = ({ pageSize, data, setCurrentPageData }) => {
         className={`border-2 scale-105 transition-all text-blue-700 ${
           currentPage === 1 ? "text-gray-400" : "text-white"
         }`}
-        disabled={currentPage === 1}
+        disabled={currentPage === 1 || data.length === 0}
         onClick={() => handlePageChange(currentPage - 1)}
       >
         <ChevronLeft />
@@ -36,7 +36,7 @@ const Pagination = ({ pageSize, data, setCurrentPageData }) => {
         className={`border-2 scale-105 transition-all text-blue-700 ${
           currentPage !== totalPages ? "text-white" : "text-gray-400"
         }`}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || data.length === 0}
         onClick={() => handlePageChange(currentPage + 1)}
       >
         <ChevronRight />
