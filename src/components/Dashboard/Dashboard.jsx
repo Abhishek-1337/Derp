@@ -62,39 +62,41 @@ const Dashboard = () => {
             icon={<TotalPriceIcon additionalStyles="text-white" />}
           />
         </div>
-        <div className="overflow-auto mt-10 bg-white rounded-lg p-4  shadow-lg shadow-gray-700">
+        <div className="mt-10 bg-white rounded-lg p-4  shadow-lg shadow-gray-700">
           <h2 className="text-center font-medium text-base">Latest 3 orders</h2>
-          <table className="min-w-[720px] md:w-full mt-4 table-fixed">
-            <thead>
-              <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-                <th className="font-medium mr-2">CUSTOMER</th>
-                <th className="font-medium mr-2">ORDER DATE</th>
-                <th className="font-medium mr-2">STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderData.slice(-3).map((item) => {
-                return (
-                  <tr key={item.order_id} className="text-center text-[14px]">
-                    <TableField data={item.customer_name} />
-                    <TableField data={item.order_date} />
-                    <td className="border-2 p-1">
-                      <span
-                        className={`${
-                          item.status === "Delivered" && "bg-green-300"
-                        } ${item.status === "Return" && "bg-red-300"}
+          <div className="overflow-auto ">
+            <table className="min-w-[720px] md:w-full mt-4 table-fixed">
+              <thead>
+                <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
+                  <th className="font-medium mr-2">CUSTOMER</th>
+                  <th className="font-medium mr-2">ORDER DATE</th>
+                  <th className="font-medium mr-2">STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderData.slice(-3).map((item) => {
+                  return (
+                    <tr key={item.order_id} className="text-center text-[14px]">
+                      <TableField data={item.customer_name} />
+                      <TableField data={item.order_date} />
+                      <td className="border-2 p-1">
+                        <span
+                          className={`${
+                            item.status === "Delivered" && "bg-green-300"
+                          } ${item.status === "Return" && "bg-red-300"}
                   ${item.status === "Pending" && "bg-yellow-300"}
                   ${item.status === "In progress" && "bg-blue-300"}
                    p-1 pr-2 pl-2 rounded-lg text-[12px] font-medium `}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        >
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
           <div className="mt-4 text-end">
             <PrimaryButton
               title="More orders"

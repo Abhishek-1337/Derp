@@ -6,7 +6,7 @@ const HamMenu = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-5 h-5 md:w-6 md:h-6"
+      className="w-6 h-6 md:w-7 md:h-7"
     >
       <path
         strokeLinecap="round"
