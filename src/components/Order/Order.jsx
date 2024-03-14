@@ -5,9 +5,9 @@ import AppLayout from "../../shared/ui/AppLayout";
 import MainBodyLayout from "../../shared/ui/MainBodyLayout";
 import MainBodyTopBar from "../../shared/components/MainBodyTopBar";
 import OrderTable from "./OrderTable";
-import MainBodyTopBarButton from "../../shared/components/MainBodyTopBarButton";
 import Modal from "../../shared/components/Modal";
 import OrderCreate from "./OrderCreate";
+import PrimaryButton from "../../shared/components/PrimaryButton";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -48,10 +48,7 @@ const Order = () => {
             section="&gt; Orders"
             homeNavigationHandler={homeNavigationHandler}
           />
-          <MainBodyTopBarButton
-            title="Create order"
-            modalOpenHandler={handleModalOnOpen}
-          />
+          <PrimaryButton title="Create order" onClick={handleModalOnOpen} />
         </div>
         <OrderTable orderData={orderData} productData={productData} />
       </MainBodyLayout>
