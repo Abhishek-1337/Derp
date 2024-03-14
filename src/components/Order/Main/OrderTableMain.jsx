@@ -7,6 +7,7 @@ import DeleteDataInModal from "../../../shared/components/DeleteDataInModal";
 import { orderActions } from "../../../store/slice/order";
 import OrderEditableField from "./../OrderEditableField";
 import Pagination from "../../../shared/components/Pagination";
+import TableHead from "../../../shared/components/TableHead";
 
 const OrderTableMain = ({ orderData, productData, pageSize }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,6 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
       newObj.quantity = order.quantity;
       delete newObj.quantity_in_stock;
       total += +calculateTaxOnItem(newObj);
-      console.log(total);
       result.push(newObj);
     });
     setSubTotal(total);
@@ -83,15 +83,9 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
               />
             ) : (
               <table className=" w-full mt-4 table-fixed">
-                <thead>
-                  <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-                    <th className="font-medium mr-2">PRODUCT</th>
-                    <th className="font-medium mr-2">QUANTITY</th>
-                    <th className="font-medium mr-2">PRICE</th>
-                    <th className="font-medium mr-2">TAX</th>
-                    <th className="font-medium mr-2">TOTAL PRICE</th>
-                  </tr>
-                </thead>
+                <TableHead
+                  data={["PRODUCT", "QUANTITY", "PRICE", "TAX", "TOTAL PRICE"]}
+                />
                 <tbody>
                   {orderDetails.map((order) => {
                     return (
@@ -127,15 +121,10 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
           }
         />
         <table className="min-w-[720px] md:w-full mt-4 table-fixed">
-          <thead>
-            <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-              <th className="font-medium mr-2">Order ID</th>
-              <th className="font-medium mr-2">CUSTOMER</th>
-              <th className="font-medium mr-2">ORDER DATE</th>
-              <th className="font-medium mr-2">STATUS</th>
-              <th className="font-medium mr-2">ACTION</th>
-            </tr>
-          </thead>
+          <TableHead
+            data={["ORDER ID", "CUSTOMER", "ORDER DATE", "STATUS", "ACTION"]}
+          />
+
           <tbody>
             {currentPageData &&
               currentPageData.map((item) => {

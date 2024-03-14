@@ -8,6 +8,7 @@ import { productActions } from "../../../store/slice/product";
 import TableField from "../../../shared/components/TableField";
 import DeleteDataInModal from "../../../shared/components/DeleteDataInModal";
 import Pagination from "../../../shared/components/Pagination";
+import TableHead from "../../../shared/components/TableHead";
 
 //Prop -> data, entries
 const ProductTableMain = ({ pageSize, data }) => {
@@ -55,7 +56,6 @@ const ProductTableMain = ({ pageSize, data }) => {
     dispatch(productActions.updateData(obj));
     handleModalOnCancel();
   };
-  console.log(isEditClick);
   return (
     <>
       <div className="overflow-auto p-1">
@@ -81,15 +81,9 @@ const ProductTableMain = ({ pageSize, data }) => {
           }
         />
         <table className="min-w-[720px] md:w-full mt-4 table-fixed">
-          <thead>
-            <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-              <th className="font-medium mr-2">NAME</th>
-              <th className="font-medium mr-2">CATEGORY</th>
-              <th className="font-medium mr-2">PRICE</th>
-              <th className="font-medium mr-2">QUANTITY</th>
-              <th className="font-medium mr-2">ACTION</th>
-            </tr>
-          </thead>
+          <TableHead
+            data={["NAME", "CATEGORY", "PRICE", "QUANTITY", "ACTION"]}
+          />
           <tbody>
             {data.length === 0 && (
               <tr className="text-center ">
