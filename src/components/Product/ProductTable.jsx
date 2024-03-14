@@ -1,34 +1,50 @@
+import TableTop from "../../shared/components/TableTop";
 import ProductTableMain from "./Main/ProductTableMain";
-import ProductTableTop from "./Top/ProductTableTop";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const ProductTable = () => {
-  const [selectedValue, setSelectedValue] = useState(10);
   const productData = useSelector((state) => state.product.data);
+  const [selectedValue, setSelectedValue] = useState(10);
   const [searchResults, setSearchResults] = useState([]);
+  const [searchedQuery, setSearchedQuery] = useState("");
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
   };
 
   const searchFilterOnData = (value) => {
-    const results = productData.filter((item) =>
-      item.product_name.toLowerCase().includes(value.toLowerCase())
-    );
-    setSearchResults(results);
+    if (value !== "") {
+      const results = productData.filter((item) => {
+        return (
+          item.product_name.toLowerCase().includes(value?.toLowerCase()) ||
+          item.category.toLowerCase().includes(value?.toLowerCase())
+        );
+      });
+      setSearchedQuery(value);
+      setSearchResults(results);
+    } else {
+      setSearchedQuery("");
+      setSearchResults([]);
+    }
   };
-
+  console.log(searchResults.length);
   return (
     <div className="overflow-auto mt-4 bg-white rounded-lg p-2  shadow-lg shadow-gray-700">
-      <ProductTableTop
+      <TableTop
         handleChange={handleChange}
         selectedValue={selectedValue}
         searchFilterOnData={searchFilterOnData}
       />
       <ProductTableMain
         pageSize={+selectedValue}
-        data={searchResults.length === 0 ? productData : searchResults}
+        data={
+          searchResults.length === 0
+            ? searchedQuery === ""
+              ? productData
+              : []
+            : searchResults
+        }
       />
     </div>
   );
