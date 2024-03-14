@@ -57,87 +57,89 @@ const ProductTableMain = ({ pageSize, data }) => {
   };
   console.log(isEditClick);
   return (
-    <div className="overflow-auto p-1">
-      <Modal
-        isOpen={modalDialog}
-        onCancel={handleModalOnCancel}
-        title={isEditClick ? "Edit Product" : "Delete Product"}
-        data={
-          isEditClick ? (
-            <ProductForm
-              productDetails={productEdit}
-              onCancel={handleModalOnCancel}
-              dispatchUpdateDataAction={dispatchUpdateProduct}
-              productData={data}
-            />
-          ) : (
-            <DeleteDataInModal
-              dispatchDeleteItem={dispatchDeleteProduct}
-              itemToDeleteId={itemToDeleteId}
-              handleModalOnCancel={handleModalOnCancel}
-            />
-          )
-        }
-      />
-      <table className="min-w-[720px] md:w-full mt-4 table-fixed">
-        <thead>
-          <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
-            <th className="font-medium mr-2">NAME</th>
-            <th className="font-medium mr-2">CATEGORY</th>
-            <th className="font-medium mr-2">PRICE</th>
-            <th className="font-medium mr-2">QUANTITY</th>
-            <th className="font-medium mr-2">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length === 0 && (
-            <tr className="text-center ">
-              <td></td>
-              <td></td>
-              <td>No item found</td>
-              <td></td>
-              <td></td>
+    <>
+      <div className="overflow-auto p-1">
+        <Modal
+          isOpen={modalDialog}
+          onCancel={handleModalOnCancel}
+          title={isEditClick ? "Edit Product" : "Delete Product"}
+          data={
+            isEditClick ? (
+              <ProductForm
+                productDetails={productEdit}
+                onCancel={handleModalOnCancel}
+                dispatchUpdateDataAction={dispatchUpdateProduct}
+                productData={data}
+              />
+            ) : (
+              <DeleteDataInModal
+                dispatchDeleteItem={dispatchDeleteProduct}
+                itemToDeleteId={itemToDeleteId}
+                handleModalOnCancel={handleModalOnCancel}
+              />
+            )
+          }
+        />
+        <table className="min-w-[720px] md:w-full mt-4 table-fixed">
+          <thead>
+            <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
+              <th className="font-medium mr-2">NAME</th>
+              <th className="font-medium mr-2">CATEGORY</th>
+              <th className="font-medium mr-2">PRICE</th>
+              <th className="font-medium mr-2">QUANTITY</th>
+              <th className="font-medium mr-2">ACTION</th>
             </tr>
-          )}
-          {currentPageData &&
-            currentPageData.map((item) => {
-              return (
-                <tr key={item.product_id} className="text-center text-[14px]">
-                  <TableField data={item.product_name} />
-                  <TableField data={item.category} />
-                  <TableField data={item.price} />
-                  <TableField data={item.quantity_in_stock} />
-                  <TableField
-                    data={
-                      <>
-                        <div
-                          id={item.product_id}
-                          className="cursor-pointer bg-cyan-500 p-1 rounded"
-                          onClick={() => modalDialogHandler(item)}
-                        >
-                          <EditIcon additionalStyles="text-white" />
-                        </div>
-                        <div
-                          className="cursor-pointer bg-red-700 p-1 rounded"
-                          onClick={() => deleteProductHandler(item)}
-                        >
-                          <DeleteIcon />
-                        </div>
-                      </>
-                    }
-                    additionalStyles="flex justify-center gap-1"
-                  />
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.length === 0 && (
+              <tr className="text-center ">
+                <td></td>
+                <td></td>
+                <td>No item found</td>
+                <td></td>
+                <td></td>
+              </tr>
+            )}
+            {currentPageData &&
+              currentPageData.map((item) => {
+                return (
+                  <tr key={item.product_id} className="text-center text-[14px]">
+                    <TableField data={item.product_name} />
+                    <TableField data={item.category} />
+                    <TableField data={item.price} />
+                    <TableField data={item.quantity_in_stock} />
+                    <TableField
+                      data={
+                        <>
+                          <div
+                            id={item.product_id}
+                            className="cursor-pointer bg-cyan-500 p-1 rounded"
+                            onClick={() => modalDialogHandler(item)}
+                          >
+                            <EditIcon additionalStyles="text-white" />
+                          </div>
+                          <div
+                            className="cursor-pointer bg-red-700 p-1 rounded"
+                            onClick={() => deleteProductHandler(item)}
+                          >
+                            <DeleteIcon />
+                          </div>
+                        </>
+                      }
+                      additionalStyles="flex justify-center gap-1"
+                    />
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
       <Pagination
         pageSize={pageSize}
         setCurrentPageData={handleCurrentPageData}
         data={data}
       />
-    </div>
+    </>
   );
 };
 
