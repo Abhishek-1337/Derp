@@ -3,7 +3,7 @@ const MainBodyTopBar = ({ heading, section, homeNavigationHandler }) => {
     <div>
       <h2 className="text-lg font-medium tracking-wide">{heading}</h2>
       <p className="text-xs tracking-tight font-normal">
-        <span className="text-blue-700">
+        <span className="text-blue-700 hover:text-white transition-all">
           <button onClick={homeNavigationHandler}>Dashboard</button>
         </span>{" "}
         {section}

@@ -13,8 +13,6 @@ const Modal = ({ isOpen, onCancel, data, title, additionalStyles }) => {
     };
   }, [isOpen]);
 
-  console.log("modal");
-
   return createPortal(
     <div
       className={`${
@@ -26,7 +24,7 @@ const Modal = ({ isOpen, onCancel, data, title, additionalStyles }) => {
         onClick={onCancel}
       ></div>
       <div
-        className={`absolute top-0 right-0 bottom-0 left-0 max-w-[500px] max-h-max  m-auto z-30  p-4 ${additionalStyles} `}
+        className={`absolute top-0 right-0 bottom-0 left-0 max-w-[500px] max-h-max  m-auto z-50  p-4 ${additionalStyles} `}
       >
         <header className="bg-gray-500 rounded-t-2xl p-2 text-center text-white font-medium ">
           {title}
