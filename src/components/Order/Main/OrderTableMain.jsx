@@ -102,6 +102,15 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
           />
 
           <tbody>
+            {orderData.length === 0 && (
+              <tr className="text-center ">
+                <td></td>
+                <td></td>
+                <td>No item found</td>
+                <td></td>
+                <td></td>
+              </tr>
+            )}
             {currentPageData &&
               currentPageData.map((item) => {
                 return (
