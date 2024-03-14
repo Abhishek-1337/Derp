@@ -8,6 +8,7 @@ import { orderActions } from "../../../store/slice/order";
 import OrderEditableField from "./../OrderEditableField";
 import Pagination from "../../../shared/components/Pagination";
 import TableHead from "../../../shared/components/TableHead";
+import OrderPreview from "./OrderPreview";
 
 const OrderTableMain = ({ orderData, productData, pageSize }) => {
   const dispatch = useDispatch();
@@ -71,9 +72,7 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
           isOpen={modalDialog}
           onCancel={handleModalOnCancel}
           title={orderToBeDeleted ? "Delete order" : "Order details"}
-          additionalStyles={`${
-            orderToBeDeleted ? "max-w-[500px]" : "min-w-[900px]"
-          }`}
+          additionalStyles={`${orderToBeDeleted ? "max-w-[500px]" : ""}`}
           data={
             orderToBeDeleted ? (
               <DeleteDataInModal
@@ -82,41 +81,11 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
                 itemToDeleteId={orderToBeDeleted}
               />
             ) : (
-              <table className=" w-full mt-4 table-fixed">
-                <TableHead
-                  data={["PRODUCT", "QUANTITY", "PRICE", "TAX", "TOTAL PRICE"]}
-                />
-                <tbody>
-                  {orderDetails.map((order) => {
-                    return (
-                      <tr
-                        key={order.order_id}
-                        className="text-center text-[14px]"
-                      >
-                        <TableField data={order.product_name} />
-                        <TableField data={order.quantity} />
-                        <TableField data={order.price} />
-                        <TableField
-                          data={
-                            <span className="bg-green-400 p-1 rounded-lg font-medium text-[13px]">
-                              GST 10%
-                            </span>
-                          }
-                        />
-                        <TableField data={calculateTaxOnItem(order)} />
-                      </tr>
-                    );
-                  })}
-
-                  <tr className=" text-center text-[14px] bg-gray-400">
-                    <TableField data="Sub total" />
-                    <TableField />
-                    <TableField />
-                    <TableField />
-                    <TableField data={subTotal.toFixed(2)} />
-                  </tr>
-                </tbody>
-              </table>
+              <OrderPreview
+                subTotal={subTotal}
+                orderDetails={orderDetails}
+                calculateTaxOnItem={calculateTaxOnItem}
+              />
             )
           }
         />

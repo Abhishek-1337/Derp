@@ -30,7 +30,7 @@ const Modal = ({ isOpen, onCancel, data, title, additionalStyles }) => {
           {title}
         </header>
         <section
-          className={`flex items-center justify-center bg-white p-4 overflow-x-auto `}
+          className={`flex items-center justify-center bg-white p-4 overflow-auto `}
         >
           {data}
         </section>

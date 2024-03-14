@@ -22,7 +22,7 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
           isOpen={modalDialog}
           onCancel={handleModalOnCancel}
           title="Order details"
-          additionalStyles="min-w-[500px] font-medium"
+          additionalStyles="font-medium"
           data={
             <table className=" w-full mt-4 table-fixed">
               <thead>
