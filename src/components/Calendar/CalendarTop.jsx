@@ -14,7 +14,7 @@ const CalendarTop = ({ date, setDate }) => {
       <button onClick={prevMonth} disabled={new Date() > date}>
         <ChevronLeft
           additionalStyles={`${
-            new Date() > date ? "bg-blue-200" : ""
+            new Date() > date ? "bg-gray-200" : ""
           } text-white`}
         />
       </button>
