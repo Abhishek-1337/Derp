@@ -3,6 +3,7 @@ import TickRight from "../../shared/icons/TickRight";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { orderActions } from "../../store/slice/order";
+import { alertActions } from "../../store/slice/alert";
 
 const OrderEditableField = ({ item }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,12 @@ const OrderEditableField = ({ item }) => {
   const dropdownSaveHandler = () => {
     dispatch(orderActions.updateStatus({ selectedValue, id: item.order_id }));
     setStatusOption(false);
+    dispatch(
+      alertActions.setAlertData({
+        status: "success",
+        message: "Order status is updated",
+      })
+    );
   };
   return (
     <td className="border-b-2 border-r-2 p-1">
@@ -55,7 +62,7 @@ const OrderEditableField = ({ item }) => {
             </button>
           ) : (
             <button onClick={dropdownSaveHandler}>
-              <TickRight additionalStyles="h-3 w-3" />
+              <TickRight additionalStyles="h-4 w-4" />
             </button>
           )}
         </div>
