@@ -53,8 +53,8 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
           day == null ? "bg-red-300" : ""
         } bg-blue-300 border-2 p-2 text-xs md:text-sm relative ${
           orderDeliveries.length !== 0 &&
-          "bg-green-500 text-white cursor-pointer"
-        } h-[60px] md:h-[70px] w-full`}
+          "bg-green-400 text-white cursor-pointer"
+        } h-[60px] md:h-[70px] w-full hover:bg-white hover:text-black hover:border-2 hover:border-green-500`}
         onClick={handleClick}
       >
         {day !== null && day}
