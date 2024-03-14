@@ -61,7 +61,7 @@ You can navigate to this page by using links attached in the dashboard's sidebar
 
 - **Table section:** - This section contains two sub sections.
 
-  - **Table top section**- This sub-section contains a pagination functionality where you can select how many entries you want to see per page in table. Then you can traverse each page with the given arrow button below the table.
+  - **Table top section**- This sub-section contains a pagination functionality where you can select how many entries you want to see per page in table. Then you can traverse each page with the given arrow button below the table. Next page button will get disable when the user is already in the last page and Previous page button will get disable when the user is in the first page.
       - Another functionality is to filter product data from the table according to product name and category.
 
   - **Table main section**- This sub-section list all the products in the application with added functionality to edit and delete each product.
