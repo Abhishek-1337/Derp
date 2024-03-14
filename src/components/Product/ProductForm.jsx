@@ -1,26 +1,7 @@
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { uniqueProduct } from "../../shared/utils/validate";
-
-const validationSchema = Yup.object({
-  productName: Yup.string()
-    .min(3, "Product name must be at least 3 characters")
-    .max(30, "Product name must be at most 15 characters")
-    .required("Product name is required")
-    .test("is-unique", "Product name already exist", function (value) {
-      return uniqueProduct(value);
-    }),
-  price: Yup.number()
-    .min(5, "Price value must be atleast 5")
-    .max(5000, "Price value must be atmost 5000")
-    .required("Price value is required"),
-  category: Yup.string().required("Category is required"),
-  quantity: Yup.number()
-    .min(1, "Quantity value must be atleast 5")
-    .max(5000, "Quantity value must be atmost 5000")
-    .required("Quantity value is required"),
-});
 
 const ProductForm = ({
   productDetails,
@@ -29,6 +10,7 @@ const ProductForm = ({
   productData,
 }) => {
   const { id } = productDetails;
+  const [validationSchema, setValidationSchema] = useState(null);
 
   const onFormSubmit = (values, resetForm) => {
     values.productName = values.productName.trim();
@@ -43,13 +25,59 @@ const ProductForm = ({
   };
 
   useEffect(() => {
+    let schema;
+    if (productDetails.name !== "") {
+      console.log("hellomoto");
+      schema = Yup.object({
+        productName: Yup.string()
+          .min(3, "Product name must be at least 3 characters")
+          .matches(
+            /^[a-zA-Z\s]*$/,
+            "Name must contain only alphabetic characters"
+          )
+          .max(30, "Product name must be at most 15 characters")
+          .required("Product name is required"),
+        price: Yup.number()
+          .min(5, "Price value must be atleast 5")
+          .max(5000, "Price value must be atmost 5000")
+          .required("Price value is required"),
+        category: Yup.string().required("Category is required"),
+        quantity: Yup.number()
+          .min(1, "Quantity value must be atleast 5")
+          .max(5000, "Quantity value must be atmost 5000")
+          .required("Quantity value is required"),
+      });
+    } else {
+      schema = Yup.object({
+        productName: Yup.string()
+          .min(3, "Product name must be at least 3 characters")
+          .max(30, "Product name must be at most 15 characters")
+          .required("Product name is required")
+          .matches(
+            /^[a-zA-Z\s]*$/,
+            "Name must contain only alphabetic characters"
+          )
+          .test("is-unique", "Product name already exist", function (value) {
+            return !uniqueProduct(value);
+          }),
+        price: Yup.number()
+          .min(5, "Price value must be atleast 5")
+          .max(5000, "Price value must be atmost 5000")
+          .required("Price value is required"),
+        category: Yup.string().required("Category is required"),
+        quantity: Yup.number()
+          .min(1, "Quantity value must be atleast 5")
+          .max(5000, "Quantity value must be atmost 5000")
+          .required("Quantity value is required"),
+      });
+    }
+    setValidationSchema(schema);
+
     formik.setFieldValue("productName", productDetails?.name);
     formik.setFieldValue("price", productDetails?.price);
     formik.setFieldValue("category", productDetails?.category);
     formik.setFieldValue("quantity", productDetails?.quantity);
   }, [productDetails]);
-
-  console.log("productdetals");
 
   const formik = useFormik({
     initialValues: {
@@ -105,7 +133,7 @@ const ProductForm = ({
             value={formik.values.category}
           >
             <option className="font-medium">Category</option>
-            {[...new Set(productData.map((product) => product.category))].map(
+            {[...new Set(productData?.map((product) => product.category))].map(
               (category) => {
                 return <option key={category}>{category}</option>;
               }
@@ -168,7 +196,10 @@ const ProductForm = ({
       </div>
       <button
         type="submit"
-        className="text-xs p-2 bg-blue-600 rounded-lg mt-4 text-white hover:scale-105"
+        className={`text-xs p-2 bg-blue-600 rounded-lg mt-4 text-white hover:scale-105 ${
+          !formik.isValid || !formik.dirty ? "opacity-50" : "hover:scale-105"
+        }`}
+        disabled={!formik.isValid || !formik.dirty}
       >
         Save Changes
       </button>
