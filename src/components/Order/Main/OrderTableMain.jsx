@@ -9,6 +9,7 @@ import OrderEditableField from "./../OrderEditableField";
 import Pagination from "../../../shared/components/Pagination";
 import TableHead from "../../../shared/components/TableHead";
 import OrderPreview from "./OrderPreview";
+import { alertActions } from "../../../store/slice/alert";
 
 const OrderTableMain = ({ orderData, productData, pageSize }) => {
   const dispatch = useDispatch();
@@ -63,6 +64,12 @@ const OrderTableMain = ({ orderData, productData, pageSize }) => {
   const dispatchDeleteOrder = (id) => {
     dispatch(orderActions.deleteOrder(id));
     handleModalOnCancel();
+    dispatch(
+      alertActions.setAlertData({
+        status: "success",
+        message: "Order is successfully deleted",
+      })
+    );
   };
 
   return (

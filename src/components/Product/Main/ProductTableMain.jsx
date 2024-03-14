@@ -9,6 +9,7 @@ import TableField from "../../../shared/components/TableField";
 import DeleteDataInModal from "../../../shared/components/DeleteDataInModal";
 import Pagination from "../../../shared/components/Pagination";
 import TableHead from "../../../shared/components/TableHead";
+import { alertActions } from "../../../store/slice/alert";
 
 const ProductTableMain = ({ pageSize, data }) => {
   const dispatch = useDispatch();
@@ -48,6 +49,12 @@ const ProductTableMain = ({ pageSize, data }) => {
   const dispatchDeleteProduct = (id) => {
     dispatch(productActions.deleteData(id));
     handleModalOnCancel();
+    dispatch(
+      alertActions.setAlertData({
+        status: "success",
+        message: "Product is successfully deleted",
+      })
+    );
   };
 
   const dispatchUpdateProduct = (obj) => {
