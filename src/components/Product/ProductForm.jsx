@@ -2,6 +2,8 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { uniqueProduct } from "../../shared/utils/validate";
+import { useDispatch } from "react-redux";
+import { alertActions } from "../../store/slice/alert";
 
 const ProductForm = ({
   productDetails,
@@ -9,6 +11,7 @@ const ProductForm = ({
   dispatchUpdateDataAction,
   productData,
 }) => {
+  const dispatch = useDispatch();
   const { id } = productDetails;
   const [validationSchema, setValidationSchema] = useState(null);
 
@@ -17,8 +20,20 @@ const ProductForm = ({
     values.category = values.category.trim();
     if (id) {
       dispatchUpdateDataAction({ id, values });
+      dispatch(
+        alertActions.setAlertData({
+          status: "success",
+          message: "Product is updated successfully",
+        })
+      );
     } else {
       dispatchUpdateDataAction({ values });
+      dispatch(
+        alertActions.setAlertData({
+          status: "success",
+          message: "Product is added successfully",
+        })
+      );
       resetForm();
     }
     onCancel();

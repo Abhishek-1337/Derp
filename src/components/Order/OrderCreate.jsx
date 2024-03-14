@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { orderActions } from "../../store/slice/order";
+import { alertActions } from "../../store/slice/alert";
 
 const OrderCreate = ({ productData, onCancel }) => {
   const dispatch = useDispatch();
@@ -50,6 +51,12 @@ const OrderCreate = ({ productData, onCancel }) => {
     values.productDropdown = values.productDropdown.trim();
     values.quantity = +values.quantity;
     dispatch(orderActions.createOrder({ ...values, id: product.product_id }));
+    dispatch(
+      alertActions.setAlertData({
+        status: "success",
+        message: "Order created successfully",
+      })
+    );
     setProduct(null);
     setQuantity(0);
     onCancel();
