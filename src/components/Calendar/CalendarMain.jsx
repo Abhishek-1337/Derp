@@ -16,7 +16,7 @@ const CalendarMain = ({ date }) => {
     return daysArray;
   };
   return (
-    <div className="overflow-auto h-[70vh]">
+    <div className="overflow-auto lg:h-[70vh]">
       <div className="w-[600px] md:w-[750px] lg:w-full border-2 grid grid-cols-7 text-center font-medium text-lg bg-gray-300">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((item) => {
           return (
