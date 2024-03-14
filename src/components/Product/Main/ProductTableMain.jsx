@@ -1,36 +1,26 @@
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EditIcon from "../../../shared/icons/EditIcon";
 import DeleteIcon from "../../../shared/icons/DeleteIcon";
 import Modal from "../../../shared/components/Modal";
 import ProductForm from "../ProductForm";
 import { productActions } from "../../../store/slice/product";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import TableField from "../../../shared/components/TableField";
+import DeleteDataInModal from "../../../shared/components/DeleteDataInModal";
+import Pagination from "../../../shared/components/Pagination";
 
 //Prop -> data, entries
-const ProductTableMain = ({ pageSize, data, pageNum }) => {
+const ProductTableMain = ({ pageSize, data }) => {
   const dispatch = useDispatch();
-
   const [modalDialog, setModalDialog] = useState(false);
   const [productEdit, setProductEdit] = useState({});
   const [isEditClick, setIsEditClicked] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(pageNum);
+  const [currentPageData, setCurrentPageData] = useState([]);
 
-  const totalPages = Math.ceil(data.length / pageSize);
-
-  const handlePageChange = (pageNum) => {
-    setCurrentPage(pageNum);
+  const handleCurrentPageData = (data) => {
+    setCurrentPageData(data);
   };
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [pageSize]);
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = Math.min(startIndex + pageSize, data.length);
-  const currentPageData = data.slice(startIndex, endIndex);
 
   const modalDialogHandler = (item) => {
     const productDetails = {
@@ -57,14 +47,15 @@ const ProductTableMain = ({ pageSize, data, pageNum }) => {
   };
 
   const dispatchDeleteProduct = (id) => {
-    handleModalOnCancel();
     dispatch(productActions.deleteData(id));
+    handleModalOnCancel();
   };
 
   const dispatchUpdateProduct = (obj) => {
     dispatch(productActions.updateData(obj));
+    handleModalOnCancel();
   };
-
+  console.log(isEditClick);
   return (
     <div className="overflow-auto p-1">
       <Modal
@@ -77,25 +68,14 @@ const ProductTableMain = ({ pageSize, data, pageNum }) => {
               productDetails={productEdit}
               onCancel={handleModalOnCancel}
               dispatchUpdateDataAction={dispatchUpdateProduct}
+              productData={data}
             />
           ) : (
-            <div className="flex flex-col w-full justify-between">
-              <div className="mb-2 font-base">Are you sure?</div>
-              <div className="flex justify-end">
-                <button
-                  onClick={() => dispatchDeleteProduct(itemToDeleteId)}
-                  className="bg-red-700 text-white text-[12px] md:text-xs p-1 rounded-lg mr-2 hover:scale-110 transition-all"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={handleModalOnCancel}
-                  className="border-blue-700 border-[1px] text-blue-700 text-[12px] md:text-xs p-1 rounded-lg hover:scale-110 transition-all"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
+            <DeleteDataInModal
+              dispatchDeleteItem={dispatchDeleteProduct}
+              itemToDeleteId={itemToDeleteId}
+              handleModalOnCancel={handleModalOnCancel}
+            />
           )
         }
       />
@@ -110,58 +90,53 @@ const ProductTableMain = ({ pageSize, data, pageNum }) => {
           </tr>
         </thead>
         <tbody>
-          {currentPageData.map((item) => {
-            return (
-              <tr key={item.product_id} className="text-center text-[14px]">
-                <TableField data={item.product_name} />
-                <TableField data={item.category} />
-                <TableField data={item.price} />
-                <TableField data={item.quantity_in_stock} />
-                <TableField
-                  data={
-                    <>
-                      <div
-                        id={item.product_id}
-                        className="cursor-pointer bg-cyan-500 p-1 rounded"
-                        onClick={() => modalDialogHandler(item)}
-                      >
-                        <EditIcon />
-                      </div>
-                      <div
-                        className="cursor-pointer bg-red-700 p-1 rounded"
-                        onClick={() => deleteProductHandler(item)}
-                      >
-                        <DeleteIcon />
-                      </div>
-                    </>
-                  }
-                  additionalStyles="flex justify-center gap-1"
-                />
-              </tr>
-            );
-          })}
+          {data.length === 0 && (
+            <tr className="text-center ">
+              <td></td>
+              <td></td>
+              <td>No item found</td>
+              <td></td>
+              <td></td>
+            </tr>
+          )}
+          {currentPageData &&
+            currentPageData.map((item) => {
+              return (
+                <tr key={item.product_id} className="text-center text-[14px]">
+                  <TableField data={item.product_name} />
+                  <TableField data={item.category} />
+                  <TableField data={item.price} />
+                  <TableField data={item.quantity_in_stock} />
+                  <TableField
+                    data={
+                      <>
+                        <div
+                          id={item.product_id}
+                          className="cursor-pointer bg-cyan-500 p-1 rounded"
+                          onClick={() => modalDialogHandler(item)}
+                        >
+                          <EditIcon additionalStyles="text-white" />
+                        </div>
+                        <div
+                          className="cursor-pointer bg-red-700 p-1 rounded"
+                          onClick={() => deleteProductHandler(item)}
+                        >
+                          <DeleteIcon />
+                        </div>
+                      </>
+                    }
+                    additionalStyles="flex justify-center gap-1"
+                  />
+                </tr>
+              );
+            })}
         </tbody>
       </table>
-      <div className="flex justify-end mt-1">
-        <button
-          className={`border-2 scale-105 transition-all text-blue-700 ${
-            currentPage === 1 ? "text-gray-400" : ""
-          }`}
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          <ChevronLeft />
-        </button>
-        <button
-          className={`border-2 scale-105 transition-all text-blue-700 ${
-            currentPage === totalPages ? "text-gray-400" : ""
-          }`}
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          <ChevronRight />
-        </button>
-      </div>
+      <Pagination
+        pageSize={pageSize}
+        setCurrentPageData={handleCurrentPageData}
+        data={data}
+      />
     </div>
   );
 };
