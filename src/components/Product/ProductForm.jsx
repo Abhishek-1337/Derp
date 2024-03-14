@@ -46,7 +46,7 @@ const ProductForm = ({
         productName: Yup.string()
           .min(3, "Product name must be at least 3 characters")
           .matches(
-            /^[a-zA-Z\s]*$/,
+            /^[a-zA-Z0-9\s-]*$/,
             "Name must contain only alphabetic characters"
           )
           .max(30, "Product name must be at most 15 characters")
