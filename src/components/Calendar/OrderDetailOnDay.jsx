@@ -29,7 +29,6 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
                 <tr className="text-[12px] text-white bg-gray-500 rounded-t-xl p-1">
                   <th className="font-medium mr-2">CUSTOMER</th>
                   <th className="font-medium mr-2">ORDER ID</th>
-                  {/* <th className="font-medium mr-2">PRICE</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -52,15 +51,15 @@ const OrderDetailOnDay = ({ orderDeliveries, day }) => {
       <div
         className={`${
           day == null ? "bg-red-300" : ""
-        } bg-blue-300 border-2 p-2 text-sm relative ${
+        } bg-blue-300 border-2 p-2 text-xs md:text-sm relative ${
           orderDeliveries.length !== 0 &&
           "bg-green-500 text-white cursor-pointer"
-        }`}
+        } h-[60px] md:h-[70px] w-full`}
         onClick={handleClick}
       >
         {day !== null && day}
         {orderDeliveries.length !== 0 && (
-          <span className="block text-[14px] text-blue-900">
+          <span className="block text-[12px] md:text-[14px] text-blue-900">
             {`${orderDeliveries.length} ${
               orderDeliveries.length === 1 ? "order due" : "orders due"
             }`}

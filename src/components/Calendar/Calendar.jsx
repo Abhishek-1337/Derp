@@ -9,7 +9,7 @@ const Calendar = () => {
   return (
     <AppLayout>
       <MainBodyLayout>
-        <div className="w-full bg-white rounded-lg p-3">
+        <div className="w-full bg-white rounded-lg p-3 pb-1">
           <CalendarTop date={date} setDate={setDate} />
           <CalendarMain date={date} />
         </div>

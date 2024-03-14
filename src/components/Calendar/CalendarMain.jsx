@@ -16,11 +16,14 @@ const CalendarMain = ({ date }) => {
     return daysArray;
   };
   return (
-    <div>
-      <div className="grid grid-cols-7 text-center font-medium text-lg bg-gray-300">
+    <div className="overflow-auto h-[70vh]">
+      <div className="w-[600px] md:w-[750px] lg:w-full border-2 grid grid-cols-7 text-center font-medium text-lg bg-gray-300">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((item) => {
           return (
-            <div key={item} className="border-2">
+            <div
+              key={item}
+              className="border-2 h-[70px] w-full text-sm leading-10"
+            >
               {item}
             </div>
           );
@@ -29,7 +32,6 @@ const CalendarMain = ({ date }) => {
           return <Day day={day} key={index} date={date} />;
         })}
       </div>
-      <div className="grid grid-cols-7 font-medium text-lg text-center"></div>
     </div>
   );
 };
