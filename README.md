@@ -45,23 +45,22 @@ Dashboard also contains sidebar which you can use to navigate to different pages
 You can navigate to this page by using links attached in the dashboard's sidebar. This page has two section.
 
 - **Top Section:** - Top section has two items, one is description about the application like which page the user in and a button to create a new Product.
-    - Description is about the current page and it contains link back to the dashboard.
+    - Description tells about the current page and it contains link back to the dashboard.
       
     - **Button:**- Button opens up a form where you can put details to create a new product.
-      
-        - **Product form:**- Form contains all the fields necessary to create a product.
-          
-          > There are few validations that are happening in the form that you need to take care of
-          > - **Product name** - Product name should be unique. You can't create a product which is already in the application
-          > - **Price** - You should keep price value at least 5 dollars.
-          > - **Quantity** - Quantity of product that you add should be atleast 1.
-          > - Button would be disable until all the validation are passed.
+          Form contains all the necessary fields to create a product. There are few validations that are happening in the form that you need to take care of
+       - **Product name** - Product name should be unique. You can't create a product which is already in the application.
+       - **Price** - You should keep price at least 5 dollars.
+       - **Quantity** - Quantity of product must be atleast 1.
+       - Submit button would be disable until all the validation are passed.
 
 <img src="screenshots/Product/1.png" width="50%" height="200px">
 
 - **Table section:** - This section contains two sub sections.
 
-  - **Table top section**- This sub-section contains a pagination functionality where you can select how many entries you want to see per page in table. Then you can traverse each page with the given arrow button below the table. Next page button will get disable when the user is already in the last page and Previous page button will get disable when the user is in the first page.
+  - **Table top section**- This sub-section contains a pagination functionality where you can select how many entries you want to see per page in table. Then you can traverse each page with the given arrow button below the table.
+    
+         Next page button will get disable when the user is already in the last page and Previous page button will get disable when the user is in the first page.
       - Another functionality is to filter product data from the table according to product name and category.
 
   - **Table main section**- This sub-section list all the products in the application with added functionality to edit and delete each product.
@@ -82,12 +81,12 @@ You can navigate to this page by using links attached in the dashboard's sidebar
          </div>
 ### Order Management
   Order Page have a Top Section where you can see which page you are in currently.
-  - **Pagination and search**- User can use dropdown menu in top of the table to set the number of entries being listed in a table. Order can be searched using customer name and order id by typing into the search box. 
+  - **Pagination and search**- User can use dropdown menu present in top of the table to set the number of entries being listed in a table. Order can be searched using customer name and order id by typing into the search box. 
   - **Create order button:** - This is another functionality which Top section have. It provide user a form to create a order. Form contains field to input `customer name`, `category`, `product` and  `quantity`.
     - There are few validations that you need to understand.
-      - > **Customer name** - This field should not be empty. Every order should belong to a customer.
-      - > **Category** and **Product** - You need to choose category first so that products from that category are shown according to it.
-      - > **Quantity** - Quantity should not be 0.
+      -  **Customer name** - This field should not be empty. Every order should belong to a customer.
+      -  **Category** and **Product** - You need to choose category first so that products from that category are shown according to it.
+      -  **Quantity** - Quantity should not be 0.
 
     - #### Order
       <img src="screenshots/Order/1.png" width="50%" height="200px">
@@ -105,14 +104,16 @@ You can navigate to this page by using links attached in the dashboard's sidebar
 ### Calendar
 Calendar is used to see the number of orders on a each particular day. If there is a order on a particular date you can see that date being highlighted.
 > One thing to remember is that Calendar couldn't go backward on month that has been passed already.
- - **Top section:** - This section is used to forward the months of the calendar.
+ - **Top section:** - This section is used to go forward and backward in months of the calendar.
  - **Order details card:** - This card contains orders on a specific date. You can view it by clicking on a date on which certain order's delivery is due.
 
-> We are currently using Redux toolkit as a state management tool. So there's no option to store data persistently in our database. Data will only remain in the application as long as the page is not refreshed.
+
  - #### Calendar
     <img src="screenshots/Calendar/1.png" width="50%" height="200px">
  - #### Calendar Order details
     <img src="screenshots/Calendar/2.png" width="50%" height="200px">
+
+> We are currently using Redux toolkit as a state management tool. So there's no option to store data persistently in our database. Data will only remain in the application as long as the page is not refreshed.
 
 ## Link
   **Live demo** - [Erp system live demo](https://derp-7f4y.vercel.app/)
