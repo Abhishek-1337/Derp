@@ -21,7 +21,9 @@ const OrderCreate = ({ productData, onCancel }) => {
           .max(15, "Customer name must be at most 15 characters")
           .required("Customer name is required"),
         categoryDropdown: Yup.string().required("Category should be selected"),
-        productDropdown: Yup.string().required("Product should be selected"),
+        productDropdown: Yup.string().required(
+          "Product should be selected to place an order"
+        ),
         quantity: Yup.number()
           .min(1, "Quantity should be at least 1")
           .max(
@@ -37,7 +39,9 @@ const OrderCreate = ({ productData, onCancel }) => {
           .max(15, "Customer name must be at most 15 characters")
           .required("Customer name is required"),
         categoryDropdown: Yup.string().required("Category should be selected"),
-        productDropdown: Yup.string().required("Product should be selected"),
+        productDropdown: Yup.string().required(
+          "Product should be selected to place an order"
+        ),
         quantity: Yup.number()
           .min(1, "Quantity should be at least 1")
           .required("Quantity is needed for order"),
@@ -78,6 +82,8 @@ const OrderCreate = ({ productData, onCancel }) => {
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
+    setProduct(null); // Reset product when category changes
+    formik.setFieldValue("categoryDropdown", e.target.value);
     formik.setFieldValue("categoryDropdown", e.target.value);
   };
 
@@ -129,7 +135,7 @@ const OrderCreate = ({ productData, onCancel }) => {
             onChange={handleCategoryChange}
             value={formik.values.categoryDropdown}
           >
-            <option className="font-medium">Category</option>
+            <option className="font-medium">Select Category</option>
             {[...new Set(productData.map((product) => product.category))].map(
               (category) => {
                 return (
@@ -157,8 +163,9 @@ const OrderCreate = ({ productData, onCancel }) => {
             className="outline-none rounded-lg border-2 border-gray-400 p-1 max-w-[170px]"
             onChange={handleProductChange}
             value={formik.values.productDropdown}
+            // disabled={!category}
           >
-            <option className="font-medium">Product</option>
+            <option className="font-medium">Select Product</option>
 
             {productData
               .filter((product) => product.category === category)
@@ -190,7 +197,10 @@ const OrderCreate = ({ productData, onCancel }) => {
             onChange={handleQualityChange}
             onBlur={formik.handleBlur}
             placeholder="quantity"
-            className="outline-none rounded-lg border-2 pl-1 pr-1 border-gray-400 max-w-[170px]"
+            className={`outline-none rounded-lg border-2 pl-1 pr-1 border-gray-400 max-w-[170px] ${
+              !product ? "opacity-30" : ""
+            }`}
+            disabled={!product}
           />
 
           {formik.touched.quantity && formik.errors.quantity ? (
