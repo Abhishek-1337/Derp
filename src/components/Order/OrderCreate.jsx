@@ -102,6 +102,11 @@ const OrderCreate = ({ productData, onCancel }) => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      {!category ? (
+        <div className="text-blue-600 text-[12px] mb-5">
+          *Select category before selecting product
+        </div>
+      ) : null}
       <div className="flex gap-3 text-sm leading-6 mb-2">
         <label htmlFor="customerName" className="text-gray-700 font-medium">
           Customer Name:
@@ -163,7 +168,7 @@ const OrderCreate = ({ productData, onCancel }) => {
             className="outline-none rounded-lg border-2 border-gray-400 p-1 max-w-[170px]"
             onChange={handleProductChange}
             value={formik.values.productDropdown}
-            // disabled={!category}
+            disabled={!category}
           >
             <option className="font-medium">Select Product</option>
 
@@ -177,11 +182,6 @@ const OrderCreate = ({ productData, onCancel }) => {
                 );
               })}
           </select>
-          {formik.touched.productDropdown && formik.errors.productDropdown ? (
-            <div className="text-red-600 text-[10px]">
-              {formik.errors.productDropdown}
-            </div>
-          ) : null}
         </div>
       </div>
 
